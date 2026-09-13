@@ -1,10 +1,13 @@
 using AubgAcademicTracker.Components;
+using AubgAcademicTracker.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddScoped<CourseService>();
 
 var app = builder.Build();
 
