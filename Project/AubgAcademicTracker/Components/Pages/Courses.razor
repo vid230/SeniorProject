@@ -1,0 +1,52 @@
+﻿@page "/courses"
+
+@using AubgAcademicTracker.Models
+@using AubgAcademicTracker.Services
+
+@inject CourseService CourseService
+
+<PageTitle>Courses</PageTitle>
+
+<h1>Courses</h1>
+
+<p>
+	Manage all courses used for GPA and credit calculations.
+</p>
+
+<a class="btn btn-primary mb-3" href="/add-course">
+	+ Add Course
+</a>
+
+@if (CourseService.Courses.Count == 0)
+{
+	<div class="alert alert-info">
+		No courses have been added yet.
+	</div>
+}
+else
+{
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Code</th>
+				<th>Course Name</th>
+				<th>Credits</th>
+				<th>Grade</th>
+				<th>Semester</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach (Course course in CourseService.Courses)
+			{
+				<tr>
+					<th>@course.Code</th>
+					<th>@course.Name</th>
+					<th>@course.Credits</th>
+					<th>@course.Grade</th>
+					<th>@course.Semester</th>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
