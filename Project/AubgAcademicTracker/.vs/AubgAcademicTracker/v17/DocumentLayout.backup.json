@@ -1,37 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{43E1D385-5F91-489D-8FF0-7E2E555E95D9}|AubgAcademicTracker.csproj|d:\\documents valeri\\gdrive mirrored stuff\\aubg\\year4\\semester 1\\senior project cos\\seniorproject\\project\\aubgacademictracker\\components\\pages\\addcourse.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{43E1D385-5F91-489D-8FF0-7E2E555E95D9}|AubgAcademicTracker.csproj|solutionrelative:components\\pages\\addcourse.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AddCourse.razor",
-              "DocumentMoniker": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker\\Components\\Pages\\AddCourse.razor",
-              "RelativeDocumentMoniker": "Components\\Pages\\AddCourse.razor",
-              "ToolTip": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker\\Components\\Pages\\AddCourse.razor",
-              "RelativeToolTip": "Components\\Pages\\AddCourse.razor",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAAAGAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-09-13T12:01:34.307Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

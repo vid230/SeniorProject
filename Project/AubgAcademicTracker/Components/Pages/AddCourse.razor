@@ -26,6 +26,14 @@
 	</div>
 
 	<div class="mb-3">
+		<label class="form-label">Course Name</label>
+
+		<InputText class="form-control" @bind-Value="course.Name"></InputText>
+
+		<ValidationMessage For="@(() => course.Name)"></ValidationMessage>
+	</div>
+
+	<div class="mb-3">
 		<label class="form-label">Credits</label>
 
 		<InputNumber class="form-control" @bind-Value="course.Credits"></InputNumber>
