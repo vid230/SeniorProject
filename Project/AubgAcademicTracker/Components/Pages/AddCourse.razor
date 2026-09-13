@@ -36,14 +36,14 @@
 	<div class="mb-3">
 		<label class="form-label">Grade</label>
 
-		<InoutSelect class="form-select" @bind-Value="course.Grade">
+		<InputSelect class="form-select" @bind-Value="course.Grade">
 			<option value="">-- Select grade --</option>
 
 			@foreach (string grade in grades)
 			{
 				<option value="@grade">@grade</option>
 			}
-		</InoutSelect>
+		</InputSelect>
 
 		<ValidationMessage For="@(() => course.Grade)"></ValidationMessage>
 	</div>
@@ -64,3 +64,34 @@
 		Cancel
 	</button>
 </EditForm>
+
+@code {
+	private Course course = new();
+
+	private readonly string[] grades =
+		{
+			"A",
+			"A-",
+			"B+",
+			"B",
+			"B-",
+			"C+",
+			"C",
+			"C-",
+			"D+",
+			"D",
+			"F"
+	};
+
+	private void SaveCourse()
+	{
+		CourseService.AddCourse(course);
+
+		Navigation.NavigateTo("/courses");
+	}
+
+	private void Cancel()
+	{
+		Navigation.NavigateTo("/courses");
+	}
+}
