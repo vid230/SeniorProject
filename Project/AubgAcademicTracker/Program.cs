@@ -1,11 +1,17 @@
 using AubgAcademicTracker.Components;
 using AubgAcademicTracker.Services;
+using AubgAcademicTracker.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' was not found.");
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddDbContextFactory<AcademicDbContext>(options => options.UseSqlite(connectionString));
 
 builder.Services.AddScoped<CourseService>();
 
