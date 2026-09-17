@@ -13,93 +13,108 @@
 <p>Enter the information for the course.</p>
 
 <EditForm Model="@course" OnValidSubmit="@SaveCourse">
-	<DataAnnotationsValidator></DataAnnotationsValidator>
 
-	<ValidationSummary></ValidationSummary>
+    <DataAnnotationsValidator />
 
-	<div class="mb-3">
-		<label class="form-label">Course Code</label>
+    <ValidationSummary />
 
-		<InputText class="form-control" @bind-Value="course.Code"></InputText>
+    <div class="mb-3">
+        <label class="form-label">Course Code</label>
 
-		<ValidationMessage For="@(() => course.Code)"></ValidationMessage>
-	</div>
+        <InputText class="form-control"
+                   @bind-Value="course.Code" />
 
-	<div class="mb-3">
-		<label class="form-label">Course Name</label>
+        <ValidationMessage For="@(() => course.Code)" />
+    </div>
 
-		<InputText class="form-control" @bind-Value="course.Name"></InputText>
+    <div class="mb-3">
+        <label class="form-label">Course Name</label>
 
-		<ValidationMessage For="@(() => course.Name)"></ValidationMessage>
-	</div>
+        <InputText class="form-control"
+                   @bind-Value="course.Name" />
 
-	<div class="mb-3">
-		<label class="form-label">Credits</label>
+        <ValidationMessage For="@(() => course.Name)" />
+    </div>
 
-		<InputNumber class="form-control" @bind-Value="course.Credits"></InputNumber>
+    <div class="mb-3">
+        <label class="form-label">Credits</label>
 
-		<ValidationMessage For="@(() => course.Credits)"></ValidationMessage>
-	</div>
+        <InputNumber class="form-control"
+                     @bind-Value="course.Credits" />
 
-	<div class="mb-3">
-		<label class="form-label">Grade</label>
+        <ValidationMessage For="@(() => course.Credits)" />
+    </div>
 
-		<InputSelect class="form-select" @bind-Value="course.Grade">
-			<option value="">-- Select grade --</option>
+    <div class="mb-3">
+        <label class="form-label">Grade</label>
 
-			@foreach (string grade in grades)
-			{
-				<option value="@grade">@grade</option>
-			}
-		</InputSelect>
+        <InputSelect class="form-select"
+                     @bind-Value="course.Grade">
 
-		<ValidationMessage For="@(() => course.Grade)"></ValidationMessage>
-	</div>
+            <option value="">-- Select grade --</option>
 
-	<div class="mb-3">
-		<label class="form-label">Semester</label>
+            @foreach (string grade in grades)
+            {
+                <option value="@grade">@grade</option>
+            }
 
-		<InputText class="form-control" @bind-Value="course.Semester" placeholder="Example: Fall 2026"></InputText>
+        </InputSelect>
 
-		<ValidationMessage For="@(() => course.Semester)"></ValidationMessage>
-	</div>
+        <ValidationMessage For="@(() => course.Grade)" />
+    </div>
 
-	<button type="submit" class="btn btn-primary">
-		Save Course
-	</button>
+    <div class="mb-3">
+        <label class="form-label">Semester</label>
 
-	<button type="button" class="btn btn-secondary ms-2" @onclick="Cancel">
-		Cancel
-	</button>
+        <InputText class="form-control"
+                   @bind-Value="course.Semester"
+                   placeholder="Example: Fall 2026" />
+
+        <ValidationMessage For="@(() => course.Semester)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Save Course
+    </button>
+
+    <button type="button"
+            class="btn btn-secondary ms-2"
+            @onclick="Cancel">
+
+        Cancel
+
+    </button>
+
 </EditForm>
 
 @code {
-	private Course course = new();
 
-	private readonly string[] grades =
-		{
-			"A",
-			"A-",
-			"B+",
-			"B",
-			"B-",
-			"C+",
-			"C",
-			"C-",
-			"D+",
-			"D",
-			"F"
-	};
+    private Course course = new();
 
-	private void SaveCourse()
-	{
-		CourseService.AddCourse(course);
+    private readonly string[] grades =
+    {
+        "A",
+        "A-",
+        "B+",
+        "B",
+        "B-",
+        "C+",
+        "C",
+        "C-",
+        "D+",
+        "D",
+        "F"
+    };
 
-		Navigation.NavigateTo("/courses");
-	}
+    private void SaveCourse()
+    {
+        CourseService.AddCourse(course);
 
-	private void Cancel()
-	{
-		Navigation.NavigateTo("/courses");
-	}
+        Navigation.NavigateTo("/courses");
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/courses");
+    }
 }
