@@ -21,8 +21,7 @@
     <div class="mb-3">
         <label class="form-label">Course Code</label>
 
-        <InputText class="form-control"
-                   @bind-Value="course.Code" />
+        <InputText class="form-control" @bind-Value="course.Code" />
 
         <ValidationMessage For="@(() => course.Code)" />
     </div>
@@ -30,8 +29,7 @@
     <div class="mb-3">
         <label class="form-label">Course Name</label>
 
-        <InputText class="form-control"
-                   @bind-Value="course.Name" />
+        <InputText class="form-control" @bind-Value="course.Name" />
 
         <ValidationMessage For="@(() => course.Name)" />
     </div>
@@ -39,8 +37,7 @@
     <div class="mb-3">
         <label class="form-label">Credits</label>
 
-        <InputNumber class="form-control"
-                     @bind-Value="course.Credits" />
+        <InputNumber class="form-control" @bind-Value="course.Credits" />
 
         <ValidationMessage For="@(() => course.Credits)" />
     </div>
@@ -48,8 +45,7 @@
     <div class="mb-3">
         <label class="form-label">Grade</label>
 
-        <InputSelect class="form-select"
-                     @bind-Value="course.Grade">
+        <InputSelect class="form-select" @bind-Value="course.Grade">
 
             <option value="">-- Select grade --</option>
 
@@ -66,9 +62,7 @@
     <div class="mb-3">
         <label class="form-label">Semester</label>
 
-        <InputText class="form-control"
-                   @bind-Value="course.Semester"
-                   placeholder="Example: Fall 2026" />
+        <InputText class="form-control" @bind-Value="course.Semester" placeholder="Example: Fall 2026" />
 
         <ValidationMessage For="@(() => course.Semester)" />
     </div>
@@ -77,12 +71,8 @@
         Save Course
     </button>
 
-    <button type="button"
-            class="btn btn-secondary ms-2"
-            @onclick="Cancel">
-
+    <button type="button" class="btn btn-secondary ms-2" @onclick="Cancel">
         Cancel
-
     </button>
 
 </EditForm>

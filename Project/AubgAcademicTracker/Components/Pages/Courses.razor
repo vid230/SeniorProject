@@ -9,16 +9,9 @@
 
 <h1>Courses</h1>
 
-<p>
-    Manage all courses used for GPA and credit calculations.
-</p>
+<p>Manage all courses used for GPA and credit calculations.</p>
 
-<a class="btn btn-primary mb-3"
-   href="/add-course">
-
-    + Add Course
-
-</a>
+<a class="btn btn-primary mb-3" href="/add-course">+ Add Course</a>
 
 @if (CourseService.Courses.Count == 0)
 {
@@ -41,7 +34,6 @@ else
         </thead>
 
         <tbody>
-
             @foreach (Course course in CourseService.Courses)
             {
                 <tr>
@@ -52,7 +44,6 @@ else
                     <td>@course.Semester</td>
                 </tr>
             }
-
         </tbody>
 
     </table>
