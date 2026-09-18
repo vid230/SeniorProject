@@ -13,7 +13,7 @@
 
 <a class="btn btn-primary mb-3" href="/add-course">+ Add Course</a>
 
-@if (CourseService.Courses.Count == 0)
+@if (courses.Count == 0)
 {
     <div class="alert alert-info">
         No courses have been added yet.
@@ -22,7 +22,6 @@
 else
 {
     <table class="table table-striped">
-
         <thead>
             <tr>
                 <th>Code</th>
@@ -34,7 +33,7 @@ else
         </thead>
 
         <tbody>
-            @foreach (Course course in CourseService.Courses)
+            @foreach (Course course in courses)
             {
                 <tr>
                     <td>@course.Code</td>
@@ -45,6 +44,15 @@ else
                 </tr>
             }
         </tbody>
-
     </table>
+}
+
+@code
+{
+    private List<Course> courses = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        courses = await CourseService.GetCoursesAsync();
+    }
 }
