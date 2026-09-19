@@ -77,5 +77,42 @@ else
 
 @code
 {
-	//
+	[Parameter]
+	public int Id { get; set; }
+
+	private Course? course;
+
+	private readonly string[] grades =
+	{
+		"A",
+		"A-",
+		"B+",
+		"B",
+		"B-",
+		"C+",
+		"C",
+		"C-",
+		"D+",
+		"D",
+		"F"
+	};
+
+	protected override async Task OnInitialyzedAsync()
+	{
+		course = await CourseService.GetCourseByIdAsync(Id);
+	}
+
+	private async Task SaveChanges()
+	{
+		if (course != null)
+		{
+			await CourseService.UpdateCourseAsync(course);
+			Navigation.NavigateTo("/courses");
+		}
+	}
+
+	private void Cancel()
+	{
+		Navigation.NavigateTo("/courses");
+	}
 }
