@@ -1,0 +1,20 @@
+﻿@page "/edit-course/{Id:int}"
+
+@using AubgAcademicTracker.Models
+@using AubgAcademicTracker.Services
+
+@inject CourseService CourseService
+@inject NavigationManager Navigation
+
+<PageTitle>Edit Course</PageTitle>
+
+<h1>Edit Course</h1>
+
+@if (course == null)
+{
+	<p>Loading course...</p>
+}
+else
+{
+	<EditForm Model="@course" OnValidSubmit="@SaveChanges"></EditForm>
+}
