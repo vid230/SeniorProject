@@ -29,6 +29,7 @@ else
                 <th>Credits</th>
                 <th>Grade</th>
                 <th>Semester</th>
+                <th>Actions</th>
             </tr>
         </thead>
 
@@ -41,6 +42,15 @@ else
                     <td>@course.Credits</td>
                     <td>@course.Grade</td>
                     <td>@course.Semester</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary me-2" href="@($"/edit-course/{course.Id}")">
+                            Edit
+                        </a>
+
+                        <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteCourse(course.Id)">
+                            Delete
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>
