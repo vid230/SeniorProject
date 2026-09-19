@@ -16,5 +16,45 @@
 }
 else
 {
-	<EditForm Model="@course" OnValidSubmit="@SaveChanges"></EditForm>
+	<EditForm Model="@course" OnValidSubmit="@SaveChanges">
+		<DataAnnotationsValidator></DataAnnotationsValidator>
+		<ValidationSummary></ValidationSummary>
+
+		<div class="mb-3">
+			<label class="form-label">Course Code</label>
+
+			<InputText class="form-control" @bind-Value="course.Code"></InputText>
+
+			<ValidationMessage For="@(() => course.Code)"></ValidationMessage>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">Course Name</label>
+
+			<InputText class="form-control" @bind-Value="course.Name"></InputText>
+
+			<ValidationMessage For="@(() => course.Name)"></ValidationMessage>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">Credits</label>
+
+			<InputNumber class="form-control" @bind-Value="course.Credits"></InputNumber>
+
+			<ValidationMessage For="@(() => course.Credits)"></ValidationMessage>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">Grade</label>
+
+			<InputSelect class="form-select" @bind-Value="course.Grade">
+				@foreach (string grade in grades)
+				{
+					<option value="@grade">@grade</option>
+				}
+			</InputSelect>
+
+			<ValidationMessage For="@(() => course.Grade)"></ValidationMessage>
+		</div>
+	</EditForm>
 }
