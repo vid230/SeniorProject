@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{43E1D385-5F91-489D-8FF0-7E2E555E95D9}|AubgAcademicTracker.csproj|d:\\documents valeri\\gdrive mirrored stuff\\aubg\\year4\\semester 1\\senior project cos\\seniorproject\\project\\aubgacademictracker\\components\\pages\\editcourse.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{43E1D385-5F91-489D-8FF0-7E2E555E95D9}|AubgAcademicTracker.csproj|solutionrelative:components\\pages\\editcourse.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EditCourse.razor",
+              "DocumentMoniker": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker\\Components\\Pages\\EditCourse.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\EditCourse.razor",
+              "ToolTip": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker\\Components\\Pages\\EditCourse.razor",
+              "RelativeToolTip": "Components\\Pages\\EditCourse.razor",
+              "ViewState": "AgIAAFkAAAAAAAAAAAAAAHMAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-09-19T16:01:27.899Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

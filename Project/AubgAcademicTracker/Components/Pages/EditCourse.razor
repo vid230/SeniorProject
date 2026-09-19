@@ -12,107 +12,107 @@
 
 @if (course == null)
 {
-	<p>Loading course...</p>
+    <p>Loading course...</p>
 }
 else
 {
-	<EditForm Model="@course" OnValidSubmit="@SaveChanges">
-		<DataAnnotationsValidator></DataAnnotationsValidator>
-		<ValidationSummary></ValidationSummary>
+    <EditForm Model="@course" OnValidSubmit="@SaveChanges">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-		<div class="mb-3">
-			<label class="form-label">Course Code</label>
+        <div class="mb-3">
+            <label class="form-label">Course Code</label>
 
-			<InputText class="form-control" @bind-Value="course.Code"></InputText>
+            <InputText class="form-control" @bind-Value="course.Code" />
 
-			<ValidationMessage For="@(() => course.Code)"></ValidationMessage>
-		</div>
+            <ValidationMessage For="@(() => course.Code)" />
+        </div>
 
-		<div class="mb-3">
-			<label class="form-label">Course Name</label>
+        <div class="mb-3">
+            <label class="form-label">Course Name</label>
 
-			<InputText class="form-control" @bind-Value="course.Name"></InputText>
+            <InputText class="form-control" @bind-Value="course.Name" />
 
-			<ValidationMessage For="@(() => course.Name)"></ValidationMessage>
-		</div>
+            <ValidationMessage For="@(() => course.Name)" />
+        </div>
 
-		<div class="mb-3">
-			<label class="form-label">Credits</label>
+        <div class="mb-3">
+            <label class="form-label">Credits</label>
 
-			<InputNumber class="form-control" @bind-Value="course.Credits"></InputNumber>
+            <InputNumber class="form-control" @bind-Value="course.Credits" />
 
-			<ValidationMessage For="@(() => course.Credits)"></ValidationMessage>
-		</div>
+            <ValidationMessage For="@(() => course.Credits)" />
+        </div>
 
-		<div class="mb-3">
-			<label class="form-label">Grade</label>
+        <div class="mb-3">
+            <label class="form-label">Grade</label>
 
-			<InputSelect class="form-select" @bind-Value="course.Grade">
-				@foreach (string grade in grades)
-				{
-					<option value="@grade">@grade</option>
-				}
-			</InputSelect>
+            <InputSelect class="form-select" @bind-Value="course.Grade">
+                @foreach (string grade in grades)
+                {
+                    <option value="@grade">@grade</option>
+                }
+            </InputSelect>
 
-			<ValidationMessage For="@(() => course.Grade)"></ValidationMessage>
-		</div>
+            <ValidationMessage For="@(() => course.Grade)" />
+        </div>
 
-		<div class="mb-3">
-			<label class="form-label">Semester</label>
+        <div class="mb-3">
+            <label class="form-label">Semester</label>
 
-			<InputText class="form-control" @bind-Value="course.Semester"></InputText>
+            <InputText class="form-control" @bind-Value="course.Semester" />
 
-			<ValidationMessage For="@(() => course.Semester)"></ValidationMessage>
-		</div>
+            <ValidationMessage For="@(() => course.Semester)" />
+        </div>
 
-		<button type="submit" class="btn btn-primary">
-			Save Changes
-		</button>
+        <button type="submit" class="btn btn-primary">
+            Save Changes
+        </button>
 
-		<button type="button" class="btn btn-secondary ms-2" @onclick="Cancel">
-			Cancel
-		</button>
-	</EditForm>
+        <button type="button" class="btn btn-secondary ms-2" @onclick="Cancel">
+            Cancel
+        </button>
+    </EditForm>
 }
 
 @code
 {
-	[Parameter]
-	public int Id { get; set; }
+    [Parameter]
+    public int Id { get; set; }
 
-	private Course? course;
+    private Course? course;
 
-	private readonly string[] grades =
-	{
-		"A",
-		"A-",
-		"B+",
-		"B",
-		"B-",
-		"C+",
-		"C",
-		"C-",
-		"D+",
-		"D",
-		"F"
-	};
+    private readonly string[] grades =
+    {
+        "A",
+        "A-",
+        "B+",
+        "B",
+        "B-",
+        "C+",
+        "C",
+        "C-",
+        "D+",
+        "D",
+        "F"
+    };
 
-	protected override async Task OnInitialyzedAsync()
-	{
-		course = await CourseService.GetCourseByIdAsync(Id);
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        course = await CourseService.GetCourseByIdAsync(Id);
+    }
 
-	private async Task SaveChanges()
-	{
-		if (course != null)
-		{
-			await CourseService.UpdateCourseAsync(course);
-			Navigation.NavigateTo("/courses");
-		}
-	}
+    private async Task SaveChanges()
+    {
+        if (course != null)
+        {
+            await CourseService.UpdateCourseAsync(course);
+            Navigation.NavigateTo("/courses");
+        }
+    }
 
-	private void Cancel()
-	{
-		Navigation.NavigateTo("/courses");
-	}
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/courses");
+    }
 }
