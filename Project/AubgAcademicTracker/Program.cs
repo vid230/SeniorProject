@@ -13,6 +13,8 @@ builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 builder.Services.AddDbContextFactory<AcademicDbContext>(options => options.UseSqlite(connectionString));
 
 builder.Services.AddScoped<CourseService>();
+builder.Services.AddScoped<SemesterService>();
+builder.Services.AddSingleton<GpaCalculator>();
 
 var app = builder.Build();
 
