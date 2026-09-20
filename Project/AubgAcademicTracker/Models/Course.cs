@@ -18,7 +18,9 @@ namespace AubgAcademicTracker.Models
         [Required(ErrorMessage = "Grade is required.")]
         public string Grade { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Semester is required.")]
-        public string Semester { get; set; } = string.Empty;
+        [Range(1, int.MaxValue, ErrorMessage = "Semester is required.")]
+        public int SemesterId { get; set; }
+
+        public Semester Semester { get; set; } = null!;
     }
 }
