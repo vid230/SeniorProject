@@ -17,7 +17,7 @@ namespace AubgAcademicTracker.Services
         {
             await using var context = await contextFactory.CreateDbContextAsync();
 
-            return await context.Courses.AsNoTracking().OrderBy(course => course.Id).ToListAsync();
+            return await context.Courses.Include(course => course.Semester).AsNoTracking().OrderBy(course => course.Id).ToListAsync();
         }
 
         public async Task AddCourseAsync(Course course)
@@ -33,7 +33,7 @@ namespace AubgAcademicTracker.Services
         {
             await using var context = await contextFactory.CreateDbContextAsync();
 
-            return await context.Courses.AsNoTracking().FirstOrDefaultAsync(course => course.Id == id);
+            return await context.Courses.Include(course => course.Semester).AsNoTracking().FirstOrDefaultAsync(course => course.Id == id);
         }
 
         public async Task UpdateCourseAsync(Course course)
