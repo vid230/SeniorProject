@@ -31,7 +31,17 @@ namespace AubgAcademicTracker.Services
         {
             await using var context = await contextFactory.CreateDbContextAsync();
 
-            //
+            bool alreadyExists = await context.Semesters.AnyAsync(existing => ((existing.Term == semester.Term) && (existing.Year == semester.Year)));
+
+            if (alreadyExists)
+            {
+                return false;
+            }
+
+            context.Semesters.Add(semester);
+            await context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
