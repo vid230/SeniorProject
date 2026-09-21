@@ -1,0 +1,36 @@
+﻿@page "/semesters/{Id:int}"
+
+@using AubgAcademicTracker.Models
+@using AubgAcademicTracker.Services
+
+@inject SemesterService SemesterService
+@inject GpaCalculator GpaCalculator
+
+<PageTitle>Semester Details</PageTitle>
+
+@if (semester == null)
+{
+	<p>Loading semester...</p>
+}
+else
+{
+	<h1>@semester.DisplayName</h1>
+
+	<p>
+		Semester GPA:
+		<strong>
+			@GpaCalculator.CalculateGpa(semester.Courses).ToString("0.00");
+		</strong>
+	</p>
+
+	@if (semester.Courses.Count == 0)
+	{
+		<div class="alert alert-info">
+			This semester does not contain any courses yet.
+		</div>
+	}
+}
+
+@code {
+
+}
