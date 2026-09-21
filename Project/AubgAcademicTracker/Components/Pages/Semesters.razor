@@ -1,0 +1,63 @@
+﻿@page "/semesters"
+
+@using AubgAcademicTracker.Models
+@using AubgAcademicTracker.Services
+
+@inject SemesterService SemesterService
+@inject GpaCalculator GpaCalculator
+
+<PageTitle>Semesters</PageTitle>
+
+<h1>Semesters</h1>
+
+<a class="btn btn-primary mb-3" href="/add-semester">
+	+ Add Semester
+</a>
+
+@if (semesters.Count == 0)
+{
+	<div class="alert alert-info">
+		No semesters have been added yet.
+	</div>
+}
+else
+{
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Semester</th>
+				<th>Courses</th>
+				<th>Attempted Credits</th>
+				<th>Semester GPA</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach (Semester semester in semesters)
+			{
+				<tr>
+					<td>@semester.DisplayName</td>
+					<td>@semester.Courses.Count</td>
+					<td>@semester.Courses.Sum(course => course.Credits)</td>
+					<td>@GpaCalculator.CalculateGpa(semester.Courses).ToString("0.00")</td>
+					<td>
+						<a class="btn btn-sm btn-outline-primary" href="@($"/semesters/{semester.Id}")">
+							View
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code
+{
+	private List<Semester> semesters = new();
+
+	protected override async Task OnInitializedAsync()
+	{
+		semesters = await SemesterService.GetSemestersAsync();
+	}
+}
