@@ -5,6 +5,7 @@
 
 @inject CourseService CourseService
 @inject NavigationManager Navigation
+@inject SemesterService SemesterService
 
 <PageTitle>Add Course</PageTitle>
 
@@ -13,7 +14,6 @@
 <p>Enter the information for the course.</p>
 
 <EditForm Model="@course" OnValidSubmit="@SaveCourse">
-
     <DataAnnotationsValidator />
 
     <ValidationSummary />
@@ -46,14 +46,12 @@
         <label class="form-label">Grade</label>
 
         <InputSelect class="form-select" @bind-Value="course.Grade">
-
             <option value="">-- Select grade --</option>
 
             @foreach (string grade in grades)
             {
                 <option value="@grade">@grade</option>
             }
-
         </InputSelect>
 
         <ValidationMessage For="@(() => course.Grade)" />
@@ -62,9 +60,18 @@
     <div class="mb-3">
         <label class="form-label">Semester</label>
 
-        <InputText class="form-control" @bind-Value="course.Semester" placeholder="Example: Fall 2026" />
+        <InputSelect class="form-select" @bind-Value="course.SemesterId">
+            <option value="0">-- Select semester --</option>
 
-        <ValidationMessage For="@(() => course.Semester)" />
+            @foreach (Semester semester in semesters)
+            {
+                <option value="@semester.Id">
+                    @semester.DisplayName
+                </option>
+            }
+        </InputSelect>
+
+        <ValidationMessage For="@(() => course.SemesterId)" />
     </div>
 
     <button type="submit" class="btn btn-primary">
@@ -74,7 +81,6 @@
     <button type="button" class="btn btn-secondary ms-2" @onclick="Cancel">
         Cancel
     </button>
-
 </EditForm>
 
 @code {
@@ -106,5 +112,12 @@
     private void Cancel()
     {
         Navigation.NavigateTo("/courses");
+    }
+
+    private List<Semester> semesters = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        semesters = await SemesterService.GetSemestersAsync();
     }
 }
