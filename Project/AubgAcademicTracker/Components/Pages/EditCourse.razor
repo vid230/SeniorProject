@@ -5,6 +5,7 @@
 
 @inject CourseService CourseService
 @inject NavigationManager Navigation
+@inject SemesterService SemesterService
 
 <PageTitle>Edit Course</PageTitle>
 
@@ -114,5 +115,14 @@ else
     private void Cancel()
     {
         Navigation.NavigateTo("/courses");
+    }
+
+    private List<Semester> semesters = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        semesters = await SemesterService.GetSemestersAsync();
+
+        course = await CourseService.GetCourseByIdAsync(Id);
     }
 }
