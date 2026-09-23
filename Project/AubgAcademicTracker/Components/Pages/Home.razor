@@ -9,66 +9,70 @@
 
 <PageTitle>Dashboard</PageTitle>
 
-<h1>AUBG Academic Progress Tracker</h1>
+<h1>Academic Dashboard</h1>
 
-<p class="lead">
-    Track your courses, GPA, credits, semesters and degree progress.
+<p class="text-muted">
+    Overview of your academic progress.
 </p>
 
-<hr />
+<div class="row">
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Cumulative GPA
+                </h5>
 
-<h2>Academic Overview</h2>
-
-<div class="row mt-4">
-    <div class="col-md-3">
-        <div class="card p-3">
-            <h5>Current GPA</h5>
-            <h2>0.00</h2>
+                <h2>@cumulativeGpa.ToString("0.00")</h2>
+            </div>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="card p-3">
-            <h5>Earned Credits</h5>
-            <h2>0</h2>
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Earned Credits
+                </h5>
+
+                <h2>@earnedCredits</h2>
+            </div>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="card p-3">
-            <h5>Attempted Credits</h5>
-            <h2>0</h2>
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Attempted Credits
+                </h5>
+
+                <h2>@attemptedCredits</h2>
+            </div>
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="card p-3">
-            <h5>Courses Completed</h5>
-            <h2>0</h2>
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Courses Completed
+                </h5>
+
+                <h2>@completedCourses</h2>
+            </div>
         </div>
     </div>
 </div>
 
-<hr class="mt-4" />
-
-<h2>Tools</h2>
-
-<div class="mt-3">
+<div class="mt-4">
     <a class="btn btn-primary me-2" href="/courses">
-        Courses
+        View Courses
     </a>
 
-    <button class="btn btn-secondary me-2" disabled>
-        Semesters
-    </button>
-
-    <button class="btn btn-secondary me-2" disabled>
-        What-if Calculator
-    </button>
-
-    <button class="btn btn-secondary" disabled>
-        Degree Progress
-    </button>
+    <a href="/add-course" class="btn btn-success me-2">
+        Add Course
+    </a>
 </div>
 
 @code
