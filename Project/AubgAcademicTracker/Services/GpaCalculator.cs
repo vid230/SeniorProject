@@ -4,11 +4,18 @@ namespace AubgAcademicTracker.Services
 {
     public class GpaCalculator
     {
+        private readonly CreditCalculator creditCalculator;
+
+        public GpaCalculator(CreditCalculator creditCalculator)
+        {
+            this.creditCalculator = creditCalculator;
+        }
+
         public double CalculateGpa(IEnumerable<Course> courses)
         {
             List<Course> courseList = courses.ToList();
 
-            int attemptedCredits = courseList.Sum(course => course.Credits);
+            int attemptedCredits = creditCalculator.CalculateAttemptedCredits(courseList);
 
             if (attemptedCredits == 0)
             {
