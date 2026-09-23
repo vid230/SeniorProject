@@ -70,3 +70,26 @@
         Degree Progress
     </button>
 </div>
+
+@code
+{
+    private List<Course> courses = new();
+
+    private double cumulativeGpa;
+    private int attemptedCredits;
+    private int earnedCredits;
+    private int completedCourses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        courses = await CourseService.GetCoursesAsync();
+
+        cumulativeGpa = GpaCalculator.CalculateGpa(courses);
+
+        attemptedCredits = CreditCalculator.CalculateAttemptedCredits(courses);
+
+        earnedCredits = CreditCalculator.CalculateEarnedCredits(courses);
+
+        completedCourses = CreditCalculator.CalculateCompletedCourses(courses);
+    }
+}
