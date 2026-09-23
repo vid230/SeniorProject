@@ -1,11 +1,11 @@
-﻿@using AubgAcademicTracker.Models
+﻿@page "/"
+
+@using AubgAcademicTracker.Models
 @using AubgAcademicTracker.Services
 
 @inject CourseService CourseService
 @inject GpaCalculator GpaCalculator
 @inject CreditCalculator CreditCalculator
-
-@page "/"
 
 <PageTitle>Dashboard</PageTitle>
 
@@ -66,12 +66,16 @@
 </div>
 
 <div class="mt-4">
-    <a class="btn btn-primary me-2" href="/courses">
+    <a href="/courses" class="btn btn-primary me-2">
         View Courses
     </a>
 
     <a href="/add-course" class="btn btn-success me-2">
         Add Course
+    </a>
+
+    <a href="/semesters" class="btn btn-secondary">
+        View Semesters
     </a>
 </div>
 
