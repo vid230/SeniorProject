@@ -14,7 +14,9 @@ builder.Services.AddDbContextFactory<AcademicDbContext>(options => options.UseSq
 
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<SemesterService>();
+
 builder.Services.AddSingleton<GpaCalculator>();
+builder.Services.AddSingleton<CreditCalculator>();
 
 var app = builder.Build();
 
