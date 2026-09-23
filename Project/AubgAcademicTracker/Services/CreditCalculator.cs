@@ -18,5 +18,25 @@ namespace AubgAcademicTracker.Services
         {
             return courses.Count(course => IsPassingGrade(course.Grade));
         }
+
+        public bool IsPassingGrade(string grade)
+        {
+            switch (grade)
+            {
+                case "A":
+                case "A-":
+                case "B+":
+                case "B":
+                case "B-":
+                case "C+":
+                case "C":
+                case "C-":
+                case "D+":
+                case "D":
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }
