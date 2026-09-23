@@ -1,4 +1,11 @@
-﻿@page "/"
+﻿@using AubgAcademicTracker.Models
+@using AubgAcademicTracker.Services
+
+@inject CourseService CourseService
+@inject GpaCalculator GpaCalculator
+@inject CreditCalculator CreditCalculator
+
+@page "/"
 
 <PageTitle>Dashboard</PageTitle>
 
@@ -13,7 +20,6 @@
 <h2>Academic Overview</h2>
 
 <div class="row mt-4">
-
     <div class="col-md-3">
         <div class="card p-3">
             <h5>Current GPA</h5>
@@ -41,7 +47,6 @@
             <h2>0</h2>
         </div>
     </div>
-
 </div>
 
 <hr class="mt-4" />
