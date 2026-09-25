@@ -17,6 +17,7 @@ builder.Services.AddScoped<SemesterService>();
 
 builder.Services.AddSingleton<GpaCalculator>();
 builder.Services.AddSingleton<CreditCalculator>();
+builder.Services.AddSingleton<WhatIfCalculator>();
 
 var app = builder.Build();
 
