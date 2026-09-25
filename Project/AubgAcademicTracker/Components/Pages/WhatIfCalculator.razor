@@ -1,0 +1,54 @@
+﻿@page "/what-if"
+
+@using AubgAcademicTracker.Models
+@using AubgAcademicTracker.Services
+
+@inject CourseService CourseService
+@inject GpaCalculator GpaCalculator
+@inject WhatIfCalculator WhatIfCalculator
+
+<PageTitle>What-if GPA Calculator</PageTitle>
+
+<h1>What-if GPA Calculator</h1>
+
+<p class="text-muted">
+	Add hypothetical future courses to see how they could affect
+	your cumulative GPA. These courses will not be saved.
+</p>
+
+<div class="row mb-4">
+	<div class="col-md-4">
+		<div class="card">
+			<div class="card-body">
+				<h5>Current GPA</h5>
+				<h2>@currentGpa.ToString("0.00")</h2>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="card">
+			<div class="card-body">
+				<h5>Projected GPA</h5>
+				<h2>@projectedGpa.ToString("0.00")</h2>
+			</div>
+		</div>
+	</div>
+</div>
+
+<h3>Add Hypothetical Course</h3>
+
+<EditForm Model="@newCourse" OnValidSubmit="@AddHypotheticalCourse">
+	<DataAnnotationsValidator></DataAnnotationsValidator>
+	<ValidationSummary></ValidationSummary>
+
+	<div class="mb-3">
+		<label class="form-label">Course Name</label>
+
+		<InputText class="form-control" @bind-Value="newCourse.Name"></InputText>
+	</div>
+</EditForm>
+
+@code {
+
+}
