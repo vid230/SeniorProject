@@ -1,0 +1,9 @@
+# SQLite database
+academictracker.db
+academictracker.db-shm
+academictracker.db-wal
+
+# Visual Studio temporary files
+.vs/
+bin/
+obj/
