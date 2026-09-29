@@ -12,70 +12,76 @@
 <h1>What-if GPA Calculator</h1>
 
 <p class="text-muted">
-	Add hypothetical future courses to see how they could affect
-	your cumulative GPA. These courses will not be saved.
+    Add hypothetical future courses to see how they could affect
+    your cumulative GPA. These courses will not be saved.
 </p>
 
 <div class="row mb-4">
-	<div class="col-md-4">
-		<div class="card">
-			<div class="card-body">
-				<h5>Current GPA</h5>
-				<h2>@currentGpa.ToString("0.00")</h2>
-			</div>
-		</div>
-	</div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5>Current GPA</h5>
+                <h2>@currentGpa.ToString("0.00")</h2>
+            </div>
+        </div>
+    </div>
 
-	<div class="col-md-4">
-		<div class="card">
-			<div class="card-body">
-				<h5>Projected GPA</h5>
-				<h2>@projectedGpa.ToString("0.00")</h2>
-			</div>
-		</div>
-	</div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5>Projected GPA</h5>
+                <h2>@projectedGpa.ToString("0.00")</h2>
+            </div>
+        </div>
+    </div>
 </div>
 
 <h3>Add Hypothetical Course</h3>
 
 <EditForm Model="@newCourse" OnValidSubmit="@AddHypotheticalCourse">
-	<DataAnnotationsValidator></DataAnnotationsValidator>
-	<ValidationSummary></ValidationSummary>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-	<div class="mb-3">
-		<label class="form-label">Course Name</label>
+    <div class="mb-3">
+        <label class="form-label">
+            Course Name
+        </label>
 
-		<InputText class="form-control" @bind-Value="newCourse.Name"></InputText>
+        <InputText class="form-control" @bind-Value="newCourse.Name" />
 
-		<ValidationMessage For="@(() => newCourse.Name)"></ValidationMessage>
-	</div>
+        <ValidationMessage For="@(() => newCourse.Name)" />
+    </div>
 
-	<div class="mb-3">
-		<label class="form-label">Credits</label>
+    <div class="mb-3">
+        <label class="form-label">
+            Credits
+        </label>
 
-		<InputNumber class="form-control" @bind-Value="newCourse.Credits"></InputNumber>
+        <InputNumber class="form-control" @bind-Value="newCourse.Credits" />
 
-		<ValidationMessage For="@(() => newCourse.Credits)"></ValidationMessage>
-	</div>
+        <ValidationMessage For="@(() => newCourse.Credits)" />
+    </div>
 
-	<div class="mb-3">
-		<label class="form-label">Expected Grade</label>
+    <div class="mb-3">
+        <label class="form-label">
+            Expected Grade
+        </label>
 
-		<InputSelect class="form-select" @bind-Value="newCourse.Grade">
-			<option value="">-- Select grade --</option>
+        <InputSelect class="form-select" @bind-Value="newCourse.Grade">
+            <option value="">-- Select grade --</option>
 
-			@foreach (string grade in grades)
-			{
-				<option value="@grade">@grade</option>
-			}
-		</InputSelect>
+            @foreach (string grade in grades)
+            {
+                <option value="@grade">@grade</option>
+            }
+        </InputSelect>
 
-		<ValidationMessage For="@(() => newCourse.Grade)"></ValidationMessage>
-	</div>
+        <ValidationMessage For="@(() => newCourse.Grade)" />
+    </div>
 
-	<button type="submit" class="btn btn-primary">
-		Add Hypothetical Course
-	</button>
+    <button type="submit" class="btn btn-primary">
+        Add Hypothetical Course
+    </button>
 </EditForm>
 
 <hr />
@@ -84,45 +90,110 @@
 
 @if (hypotheticalCourses.Count == 0)
 {
-	<div class="alert alert-info">
-		No hypothetical courses have been added.
-	</div>
+    <div class="alert alert-info">
+        No hypothetical courses have been added.
+    </div>
 }
 else
 {
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Course</th>
-				<th>Credits</th>
-				<th>Expected Grade</th>
-				<th>Action</th>
-			</tr>
-		</thead>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Credits</th>
+                <th>Expected Grade</th>
+                <th>Action</th>
+            </tr>
+        </thead>
 
-		<tbody>
-			@foreach (WhatIfCourse course in hypotheticalCourses)
-			{
-				<tr>
-					<td>@course.Name</td>
-					<td>@course.Credits</td>
-					<td>@course.Grade</td>
+        <tbody>
+            @foreach (WhatIfCourse course in hypotheticalCourses)
+            {
+                <tr>
+                    <td>@course.Name</td>
+                    <td>@course.Credits</td>
+                    <td>@course.Grade</td>
 
-					<td>
-						<button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveCourse(course)">
-							Remove
-						</button>
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveCourse(course)">
+                            Remove
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-	<button class="btn btn-secondary" @onclick="Reset">
-		Reset
-	</button>
+    <button class="btn btn-secondary" @onclick="Reset">
+        Reset
+    </button>
 }
 
-@code {
+@code
+{
+    private List<Course> currentCourses = new();
 
+    private List<WhatIfCourse> hypotheticalCourses = new();
+
+    private WhatIfCourse newCourse = new();
+
+    private double currentGpa;
+    private double projectedGpa;
+
+    private readonly string[] grades =
+    {
+        "A",
+        "A-",
+        "B+",
+        "B",
+        "B-",
+        "C+",
+        "C",
+        "C-",
+        "D+",
+        "D",
+        "F"
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentCourses = await CourseService.GetCoursesAsync();
+
+        currentGpa = GpaCalculator.CalculateGpa(currentCourses);
+
+        projectedGpa = currentGpa;
+    }
+
+    private void AddHypotheticalCourse()
+    {
+        hypotheticalCourses.Add(new WhatIfCourse
+            {
+                Name = newCourse.Name,
+                Credits = newCourse.Credits,
+                Grade = newCourse.Grade
+            });
+
+        newCourse = new WhatIfCourse();
+
+        UpdateProjectedGpa();
+    }
+
+    private void RemoveCourse(WhatIfCourse course)
+    {
+        hypotheticalCourses.Remove(course);
+
+        UpdateProjectedGpa();
+    }
+
+    private void Reset()
+    {
+        hypotheticalCourses.Clear();
+
+        UpdateProjectedGpa();
+    }
+
+    private void UpdateProjectedGpa()
+    {
+        projectedGpa = WhatIfCalculator.CalculateProjectedGpa(currentCourses, hypotheticalCourses);
+    }
 }
