@@ -46,6 +46,31 @@
 		<label class="form-label">Course Name</label>
 
 		<InputText class="form-control" @bind-Value="newCourse.Name"></InputText>
+
+		<ValidationMessage For="@(() => newCourse.Name)"></ValidationMessage>
+	</div>
+
+	<div class="mb-3">
+		<label class="form-label">Credits</label>
+
+		<InputNumber class="form-control" @bind-Value="newCourse.Credits"></InputNumber>
+
+		<ValidationMessage For="@(() => newCourse.Credits)"></ValidationMessage>
+	</div>
+
+	<div class="mb-3">
+		<label class="form-label">Expected Grade</label>
+
+		<InputSelect class="form-select" @bind-Value="newCourse.Grade">
+			<option value="">-- Select grade --</option>
+
+			@foreach (string grade in grades)
+			{
+				<option value="@grade">@grade</option>
+			}
+		</InputSelect>
+
+		<ValidationMessage For="@(() => newCourse.Grade)"></ValidationMessage>
 	</div>
 </EditForm>
 
