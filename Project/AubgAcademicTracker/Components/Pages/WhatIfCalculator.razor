@@ -5,7 +5,7 @@
 
 @inject CourseService CourseService
 @inject GpaCalculator GpaCalculator
-@inject WhatIfCalculator WhatIfCalculator
+@inject AubgAcademicTracker.Services.WhatIfCalculator WhatIfService
 
 <PageTitle>What-if GPA Calculator</PageTitle>
 
@@ -194,6 +194,6 @@ else
 
     private void UpdateProjectedGpa()
     {
-        projectedGpa = WhatIfCalculator.CalculateProjectedGpa(currentCourses, hypotheticalCourses);
+        projectedGpa = WhatIfService.CalculateProjectedGpa(currentCourses, hypotheticalCourses);
     }
 }
