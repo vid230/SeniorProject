@@ -71,6 +71,28 @@ namespace AubgAcademicTracker.Services
                 if (courseIndex == remainingCourseList.Count)
                 {
                     double finalGpa = (existingQualityPoints + newQualityPoints) / finalCredits;
+
+                    if ((finalGpa >= targetGpa) && (newQualityPoints < bestNewQualityPoints))
+                    {
+                        bestNewQualityPoints = newQualityPoints;
+                        bestProjectedGpa = finalGpa;
+
+                        bestCombination = currentCombination.Select(item => new GradeRecommendation
+                        {
+                            CourseName = item.CourseName,
+
+                            Credits = item.Credits,
+
+                            Grade = item.Grade
+                        }).ToList();
+                    }
+                    return;
+                }
+                RemainingCourse course = remainingCourseList[courseIndex];
+
+                foreach ()
+                {
+                    //
                 }
             }
         }
