@@ -55,6 +55,24 @@ namespace AubgAcademicTracker.Services
             }
 
             List<GradeRecommendation> currentCombination = new();
+
+            List<GradeRecommendation>? bestCombination = null;
+
+            double bestNewQualityPoints = double.PositiveInfinity;
+
+            double bestProjectedGpa = 0;
+
+            long nodesVisited = 0;
+
+            void Search(int courseIndex, double newQualityPoints)
+            {
+                nodesVisited++;
+
+                if (courseIndex == remainingCourseList.Count)
+                {
+                    double finalGpa = (existingQualityPoints + newQualityPoints) / finalCredits;
+                }
+            }
         }
     }
 }
