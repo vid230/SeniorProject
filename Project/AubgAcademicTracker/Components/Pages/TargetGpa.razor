@@ -90,8 +90,41 @@ else
 			}
 
 		</tbody>
-
 	</table>
+
+	<button class="btn btn-success" @onclick="Solve">
+		Find Required Grades
+	</button>
+}
+
+@if (result != null)
+{
+	<hr />
+
+	<h3>Solver Result</h3>
+
+	@if (!result.IsAchievable)
+	{
+		<div class="alert alert-warning">
+			The target GPA cannot be reached with the
+			remaining courses.
+		</div>
+	}
+	else
+	{
+		<div class="alert alert-success">
+
+			Target GPA can be reached.
+
+			<br />
+
+			Projected GPA:
+			<strong>
+				@result.ProjectedGpa.ToString("0.00")
+			</strong>
+
+		</div>
+	}
 }
 
 @code {
