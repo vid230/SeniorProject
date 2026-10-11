@@ -22,6 +22,31 @@
 	<input type="number" class="form-control" style="max-width: 250px;" min="0" max="4" step="0.01" @bind="targetGpa"/>
 </div>
 
+<h3>Add Remaining Course</h3>
+
+<EditForm Model="@newCourse" OnInvalidSubmit="@AddRemainingCourse">
+	
+	<DataAnnotationsValidator></DataAnnotationsValidator>
+	<ValidationSummary></ValidationSummary>
+
+	<div class="mb-3">
+		<label class="form-label">Course Name</label>
+
+		<InputText class="form-control" @bind-Value="newCourse.Name"></InputText>
+
+		<ValidationMessage For="@(() => newCourse.Name)"></ValidationMessage>
+	</div>
+
+	<div class="mb-3">
+		<label class="form-label">Credits</label>
+
+		<InputNumber class="form-control" @bind-Value="newCourse.Credits"></InputNumber>
+
+		<ValidationMessage For="@(() => newCourse.Credits)"></ValidationMessage>
+	</div>
+
+</EditForm>
+
 @code {
 
 }
