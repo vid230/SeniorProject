@@ -45,7 +45,54 @@
 		<ValidationMessage For="@(() => newCourse.Credits)"></ValidationMessage>
 	</div>
 
+	<button type="submit" class="btn btn-primary">
+		Add Remaining Course
+	</button>
+
 </EditForm>
+
+<hr />
+
+<h3>Remaining Courses</h3>
+
+@if (remainingCourses.Count == 0)
+{
+	<div class="alert alert-info">
+		No remaining courses have been added.
+	</div>
+}
+else
+{
+	<table class="table table-striped">
+
+		<thead>
+			<tr>
+				<th>Course</th>
+				<th>Credits</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+
+		<tbody>
+
+			@foreach (RemainingCourse course in remainingCourses)
+			{
+				<tr>
+					<td>@course.Name</td>
+					<td>@course.Credits</td>
+
+					<td>
+						<button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveCourse(course)">
+							Remove
+						</button>
+					</td>
+				</tr>
+			}
+
+		</tbody>
+
+	</table>
+}
 
 @code {
 
