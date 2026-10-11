@@ -18,8 +18,7 @@ namespace AubgAcademicTracker.Services
             "C",
             "C-",
             "D+",
-            "D",
-            "F"
+            "D"
         };
 
         public TargetGpaSolver(GpaCalculator gpaCalculator, CreditCalculator creditCalculator)
@@ -77,24 +76,57 @@ namespace AubgAcademicTracker.Services
                         bestNewQualityPoints = newQualityPoints;
                         bestProjectedGpa = finalGpa;
 
-                        bestCombination = currentCombination.Select(item => new GradeRecommendation
-                        {
-                            CourseName = item.CourseName,
+                        bestCombination = currentCombination.Select(item =>
+                                    new GradeRecommendation
+                                    {
+                                        CourseName =
+                                            item.CourseName,
 
-                            Credits = item.Credits,
+                                        Credits =
+                                            item.Credits,
 
-                            Grade = item.Grade
-                        }).ToList();
+                                        Grade =
+                                            item.Grade
+                                    }).ToList();
                     }
+
                     return;
                 }
+
                 RemainingCourse course = remainingCourseList[courseIndex];
 
-                foreach ()
+                foreach (string grade in possibleGrades)
                 {
-                    //
+                    double gradePoints = gpaCalculator.GetGradePoints(grade);
+
+                    double qualityPoints = gradePoints * course.Credits;
+
+                    currentCombination.Add(
+                        new GradeRecommendation
+                        {
+                            CourseName = course.Name,
+                            Credits = course.Credits,
+                            Grade = grade
+                        });
+
+                    Search(courseIndex + 1, newQualityPoints + qualityPoints);
+
+                    currentCombination.RemoveAt(currentCombination.Count - 1);
                 }
             }
+
+            Search(0, 0);
+
+            result.NodesVisited = nodesVisited;
+
+            if (bestCombination != null)
+            {
+                result.IsAchievable = true;
+                result.ProjectedGpa = bestProjectedGpa;
+                result.Recommendations = bestCombination;
+            }
+
+            return result;
         }
     }
 }
