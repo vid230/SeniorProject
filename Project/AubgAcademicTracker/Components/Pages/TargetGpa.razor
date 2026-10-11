@@ -124,7 +124,42 @@ else
 			</strong>
 
 		</div>
+
+		<table class="table table-bordered">
+
+			<thead>
+				<tr>
+					<th>Course</th>
+					<th>Credits</th>
+					<th>Recommended Grade</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				@foreach (GradeRecommendation recommendation in result.Recommendations)
+				{
+					<tr>
+						<td>
+							@recommendation.CourseName
+						</td>
+
+						<td>
+							@recommendation.Credits
+						</td>
+
+						<td>
+							@recommendation.Grade
+						</td>
+					</tr>
+				}
+
+			</tbody>
+
+		</table>
 	}
+
+	<p></p>
 }
 
 @code {
