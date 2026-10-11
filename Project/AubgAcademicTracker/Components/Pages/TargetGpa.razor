@@ -159,9 +159,41 @@ else
 		</table>
 	}
 
-	<p></p>
+	<p>
+		Search nodes visited:
+		<strong>@result.NodesVisited</strong>
+	</p>
+
+	<p>
+		Branches pruned:
+		<strong>@result.BranchesPruned</strong>
+	</p>
 }
 
-@code {
+@code
+{
+	private List<Course> currentCourses = new();
 
+	private List<RemainingCourse> remainingCourses = new();
+
+	private RemainingCourse newCourse = new();
+
+	private TargetGpaResult? result;
+
+	private double targetGpa = 3.00;
+
+	protected override async Task OnInitializedAsync()
+	{
+		currentCourses = await CourseService.GetCoursesAsync();
+	}
+
+	private void AddRemainingCourse()
+	{
+		remainingCourses.Add(
+		new RemainingCourse
+		{
+			Name = newCourse.Name,
+			Credits = newCourse.Credits
+		});
+	}
 }
