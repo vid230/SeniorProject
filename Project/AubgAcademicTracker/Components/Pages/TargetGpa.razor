@@ -11,43 +11,43 @@
 <h1>Target GPA Solver</h1>
 
 <p class="text-muted">
-	Enter the GPA you want to achieve and your remaining courses.
-	The solver will search for a grade combination that reaches
-	the target.
+    Enter the GPA you want to achieve and your remaining courses.
+    The solver will search for a grade combination that reaches
+    the target.
 </p>
 
 <div class="mb-4">
-	<label class="form-label">Target GPA</label>
+    <label class="form-label">Target GPA</label>
 
-	<input type="number" class="form-control" style="max-width: 250px;" min="0" max="4" step="0.01" @bind="targetGpa"/>
+    <input type="number" class="form-control" style="max-width: 250px;" min="0" max="4" step="0.01" @bind="targetGpa" />
 </div>
 
 <h3>Add Remaining Course</h3>
 
-<EditForm Model="@newCourse" OnInvalidSubmit="@AddRemainingCourse">
-	
-	<DataAnnotationsValidator></DataAnnotationsValidator>
-	<ValidationSummary></ValidationSummary>
+<EditForm Model="@newCourse" OnValidSubmit="@AddRemainingCourse">
 
-	<div class="mb-3">
-		<label class="form-label">Course Name</label>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-		<InputText class="form-control" @bind-Value="newCourse.Name"></InputText>
+    <div class="mb-3">
+        <label class="form-label">Course Name</label>
 
-		<ValidationMessage For="@(() => newCourse.Name)"></ValidationMessage>
-	</div>
+        <InputText class="form-control" @bind-Value="newCourse.Name" />
 
-	<div class="mb-3">
-		<label class="form-label">Credits</label>
+        <ValidationMessage For="@(() => newCourse.Name)" />
+    </div>
 
-		<InputNumber class="form-control" @bind-Value="newCourse.Credits"></InputNumber>
+    <div class="mb-3">
+        <label class="form-label">Credits</label>
 
-		<ValidationMessage For="@(() => newCourse.Credits)"></ValidationMessage>
-	</div>
+        <InputNumber class="form-control" @bind-Value="newCourse.Credits" />
 
-	<button type="submit" class="btn btn-primary">
-		Add Remaining Course
-	</button>
+        <ValidationMessage For="@(() => newCourse.Credits)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Add Remaining Course
+    </button>
 
 </EditForm>
 
@@ -57,143 +57,159 @@
 
 @if (remainingCourses.Count == 0)
 {
-	<div class="alert alert-info">
-		No remaining courses have been added.
-	</div>
+    <div class="alert alert-info">
+        No remaining courses have been added.
+    </div>
 }
 else
 {
-	<table class="table table-striped">
+    <table class="table table-striped">
 
-		<thead>
-			<tr>
-				<th>Course</th>
-				<th>Credits</th>
-				<th>Action</th>
-			</tr>
-		</thead>
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Credits</th>
+                <th>Action</th>
+            </tr>
+        </thead>
 
-		<tbody>
+        <tbody>
 
-			@foreach (RemainingCourse course in remainingCourses)
-			{
-				<tr>
-					<td>@course.Name</td>
-					<td>@course.Credits</td>
+            @foreach (RemainingCourse course in remainingCourses)
+            {
+                <tr>
+                    <td>@course.Name</td>
+                    <td>@course.Credits</td>
 
-					<td>
-						<button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveCourse(course)">
-							Remove
-						</button>
-					</td>
-				</tr>
-			}
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveCourse(course)">
+                            Remove
+                        </button>
+                    </td>
+                </tr>
+            }
 
-		</tbody>
-	</table>
+        </tbody>
+    </table>
 
-	<button class="btn btn-success" @onclick="Solve">
-		Find Required Grades
-	</button>
+    <button class="btn btn-success" @onclick="Solve">
+        Find Required Grades
+    </button>
 }
 
 @if (result != null)
 {
-	<hr />
+    <hr />
 
-	<h3>Solver Result</h3>
+    <h3>Solver Result</h3>
 
-	@if (!result.IsAchievable)
-	{
-		<div class="alert alert-warning">
-			The target GPA cannot be reached with the
-			remaining courses.
-		</div>
-	}
-	else
-	{
-		<div class="alert alert-success">
+    @if (!result.IsAchievable)
+    {
+        <div class="alert alert-warning">
+            The target GPA cannot be reached with the
+            remaining courses.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success">
 
-			Target GPA can be reached.
+            Target GPA can be reached.
 
-			<br />
+            <br />
 
-			Projected GPA:
-			<strong>
-				@result.ProjectedGpa.ToString("0.00")
-			</strong>
+            Projected GPA:
+            <strong>
+                @result.ProjectedGpa.ToString("0.00")
+            </strong>
 
-		</div>
+        </div>
 
-		<table class="table table-bordered">
+        <table class="table table-bordered">
 
-			<thead>
-				<tr>
-					<th>Course</th>
-					<th>Credits</th>
-					<th>Recommended Grade</th>
-				</tr>
-			</thead>
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Credits</th>
+                    <th>Recommended Grade</th>
+                </tr>
+            </thead>
 
-			<tbody>
+            <tbody>
 
-				@foreach (GradeRecommendation recommendation in result.Recommendations)
-				{
-					<tr>
-						<td>
-							@recommendation.CourseName
-						</td>
+                @foreach (GradeRecommendation recommendation in result.Recommendations)
+                {
+                    <tr>
+                        <td>
+                            @recommendation.CourseName
+                        </td>
 
-						<td>
-							@recommendation.Credits
-						</td>
+                        <td>
+                            @recommendation.Credits
+                        </td>
 
-						<td>
-							@recommendation.Grade
-						</td>
-					</tr>
-				}
+                        <td>
+                            @recommendation.Grade
+                        </td>
+                    </tr>
+                }
 
-			</tbody>
+            </tbody>
 
-		</table>
-	}
+        </table>
+    }
 
-	<p>
-		Search nodes visited:
-		<strong>@result.NodesVisited</strong>
-	</p>
+    <p>
+        Search nodes visited:
+        <strong>@result.NodesVisited</strong>
+    </p>
 
-	<p>
-		Branches pruned:
-		<strong>@result.BranchesPruned</strong>
-	</p>
+    <p>
+        Branches pruned:
+        <strong>@result.BranchesPruned</strong>
+    </p>
 }
 
 @code
 {
-	private List<Course> currentCourses = new();
+    private List<Course> currentCourses = new();
 
-	private List<RemainingCourse> remainingCourses = new();
+    private List<RemainingCourse> remainingCourses = new();
 
-	private RemainingCourse newCourse = new();
+    private RemainingCourse newCourse = new();
 
-	private TargetGpaResult? result;
+    private TargetGpaResult? result;
 
-	private double targetGpa = 3.00;
+    private double targetGpa = 3.00;
 
-	protected override async Task OnInitializedAsync()
-	{
-		currentCourses = await CourseService.GetCoursesAsync();
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        currentCourses = await CourseService.GetCoursesAsync();
+    }
 
-	private void AddRemainingCourse()
-	{
-		remainingCourses.Add(
-		new RemainingCourse
-		{
-			Name = newCourse.Name,
-			Credits = newCourse.Credits
-		});
-	}
+    private void AddRemainingCourse()
+    {
+        remainingCourses.Add(
+            new RemainingCourse
+            {
+                Name = newCourse.Name,
+                Credits = newCourse.Credits
+            });
+
+        newCourse = new RemainingCourse();
+
+        result = null;
+    }
+
+    private void RemoveCourse(RemainingCourse course)
+    {
+        remainingCourses.Remove(course);
+
+        result = null;
+    }
+
+    private void Solve()
+    {
+        result = TargetGpaSolver.Solve(currentCourses, remainingCourses, targetGpa);
+    }
 }
