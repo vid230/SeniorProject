@@ -99,52 +99,26 @@ namespace AubgAcademicTracker.Services
             {
                 nodesVisited++;
 
+                // BASE CASE:
+                // Every remaining course has received a grade.
                 if (courseIndex == remainingCourseList.Count)
                 {
                     double finalGpa = (existingQualityPoints + newQualityPoints) / finalCredits;
 
-                    if ((finalGpa >= targetGpa) && (newQualityPoints < bestNewQualityPoints))
+                    if (finalGpa >= targetGpa)
                     {
-                        bestNewQualityPoints = newQualityPoints;
-                        bestProjectedGpa = finalGpa;
-
-                        bestCombination = currentCombination.Select(item =>
-                                    new GradeRecommendation
-                                    {
-                                        CourseName =
-                                            item.CourseName,
-
-                                        Credits =
-                                            item.Credits,
-
-                                        Grade =
-                                            item.Grade
-                                    }).ToList();
+                        SaveCombination(newQualityPoints, finalGpa, currentCombination);
                     }
 
                     return;
                 }
 
-                RemainingCourse course = remainingCourseList[courseIndex];
+                int creditsStillUnassigned = remainingCreditsFromIndex[courseIndex];
 
-                foreach (string grade in possibleGrades)
-                {
-                    double gradePoints = gpaCalculator.GetGradePoints(grade);
-
-                    double qualityPoints = gradePoints * course.Credits;
-
-                    currentCombination.Add(
-                        new GradeRecommendation
-                        {
-                            CourseName = course.Name,
-                            Credits = course.Credits,
-                            Grade = grade
-                        });
-
-                    Search(courseIndex + 1, newQualityPoints + qualityPoints);
-
-                    currentCombination.RemoveAt(currentCombination.Count - 1);
-                }
+                // PRUNING RULE 1:
+                // Assume every remaining course receives an A.
+                // If the target is still impossible, stop this branch.
+                double bestPossibleAdditionalPoints = creditsStillUnassigned * highestGradePoints;
             }
 
             Search(0, 0);
