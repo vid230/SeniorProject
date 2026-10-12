@@ -62,6 +62,38 @@ namespace AubgAcademicTracker.Services
             double bestProjectedGpa = 0;
 
             long nodesVisited = 0;
+            long branchesPruned = 0;
+
+            // stores how many credits remain from each position onward.
+            int[] remainingCreditsFromIndex = new int[remainingCourseList.Count + 1];
+
+            for (int i = remainingCourseList.Count - 1; i >= 0; i--)
+            {
+                remainingCreditsFromIndex[i] = remainingCreditsFromIndex[i + 1] + remainingCourseList[i].Credits;
+            }
+
+            double highestGradePoints = gpaCalculator.GetGradePoints("A");
+
+            double lowestPassingGradePoints = gpaCalculator.GetGradePoints("D");
+
+            void SaveCombination(double newQualityPoints, double finalGpa, IEnumerable<GradeRecommendation> combination)
+            {
+                if (newQualityPoints >= bestNewQualityPoints)
+                {
+                    return;
+                }
+
+                bestNewQualityPoints = newQualityPoints;
+                bestProjectedGpa = finalGpa;
+
+                bestCombination = combination.Select(item =>
+                new GradeRecommendation
+                {
+                    CourseName = item.CourseName,
+                    Credits = item.Credits,
+                    Grade = item.Grade
+                }).ToList();
+            }
 
             void Search(int courseIndex, double newQualityPoints)
             {
