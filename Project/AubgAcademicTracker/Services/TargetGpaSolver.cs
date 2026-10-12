@@ -119,6 +119,64 @@ namespace AubgAcademicTracker.Services
                 // Assume every remaining course receives an A.
                 // If the target is still impossible, stop this branch.
                 double bestPossibleAdditionalPoints = creditsStillUnassigned * highestGradePoints;
+
+                double bestPossibleFinalGpa = (existingQualityPoints + newQualityPoints + bestPossibleAdditionalPoints) / finalCredits;
+
+                if (bestPossibleFinalGpa < targetGpa)
+                {
+                    branchesPruned++;
+                    return;
+                }
+
+                // PRUNING RULE 2:
+                // Assume every remaining course receives a D.
+                // If that already reaches the target, D for all
+                // remaining courses is the easiest completion
+                // of this branch.
+                double minimumAdditionalPoints = creditsStillUnassigned * lowestPassingGradePoints;
+
+                double minimumPossibleFinalGpa = (existingQualityPoints + newQualityPoints + minimumAdditionalPoints) / finalCredits;
+
+                if (minimumPossibleFinalGpa >= targetGpa)
+                {
+                    List<GradeRecommendation> candidate = currentCombination.Select(item =>
+                    new GradeRecommendation
+                    {
+                        CourseName = item.CourseName,
+                        Credits = item.Credits,
+                        Grade = item.Grade
+                    }).ToList();
+
+                    for (int i = courseIndex; i < remainingCourseList.Count; i++)
+                    {
+                        RemainingCourse remainingCourse = remainingCourseList[i];
+
+                        candidate.Add(new GradeRecommendation
+                        {
+                            CourseName = remainingCourse.Name,
+                            Credits = remainingCourse.Credits,
+                            Grade = "D"
+                        });
+                    }
+
+                    double candidateQualityPoints = newQualityPoints + minimumAdditionalPoints;
+
+                    SaveCombination(candidateQualityPoints, minimumPossibleFinalGpa, candidate);
+
+                    branchesPruned++;
+
+                    return;
+                }
+
+                // PRUNING RULE 3:
+                // If even the cheapest possible continuation
+                // cannot improve the best solution already found,
+                // there is no reason to search this branch.
+                if ((bestCombination != null) && (newQualityPoints + minimumAdditionalPoints >= bestNewQualityPoints))
+                {
+                    branchesPruned++;
+                    return;
+                }
             }
 
             Search(0, 0);
