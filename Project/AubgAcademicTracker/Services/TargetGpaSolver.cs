@@ -64,7 +64,7 @@ namespace AubgAcademicTracker.Services
             long nodesVisited = 0;
             long branchesPruned = 0;
 
-            // stores how many credits remain from each position onward.
+            // Stores how many credits remain from each position onward.
             int[] remainingCreditsFromIndex = new int[remainingCourseList.Count + 1];
 
             for (int i = remainingCourseList.Count - 1; i >= 0; i--)
@@ -87,12 +87,12 @@ namespace AubgAcademicTracker.Services
                 bestProjectedGpa = finalGpa;
 
                 bestCombination = combination.Select(item =>
-                new GradeRecommendation
-                {
-                    CourseName = item.CourseName,
-                    Credits = item.Credits,
-                    Grade = item.Grade
-                }).ToList();
+                            new GradeRecommendation
+                            {
+                                CourseName = item.CourseName,
+                                Credits = item.Credits,
+                                Grade = item.Grade
+                            }).ToList();
             }
 
             void Search(int courseIndex, double newQualityPoints)
@@ -140,23 +140,24 @@ namespace AubgAcademicTracker.Services
                 if (minimumPossibleFinalGpa >= targetGpa)
                 {
                     List<GradeRecommendation> candidate = currentCombination.Select(item =>
-                    new GradeRecommendation
-                    {
-                        CourseName = item.CourseName,
-                        Credits = item.Credits,
-                        Grade = item.Grade
-                    }).ToList();
+                                new GradeRecommendation
+                                {
+                                    CourseName = item.CourseName,
+                                    Credits = item.Credits,
+                                    Grade = item.Grade
+                                }).ToList();
 
                     for (int i = courseIndex; i < remainingCourseList.Count; i++)
                     {
                         RemainingCourse remainingCourse = remainingCourseList[i];
 
-                        candidate.Add(new GradeRecommendation
-                        {
-                            CourseName = remainingCourse.Name,
-                            Credits = remainingCourse.Credits,
-                            Grade = "D"
-                        });
+                        candidate.Add(
+                            new GradeRecommendation
+                            {
+                                CourseName = remainingCourse.Name,
+                                Credits = remainingCourse.Credits,
+                                Grade = "D"
+                            });
                     }
 
                     double candidateQualityPoints = newQualityPoints + minimumAdditionalPoints;
@@ -177,11 +178,35 @@ namespace AubgAcademicTracker.Services
                     branchesPruned++;
                     return;
                 }
+
+                RemainingCourse course = remainingCourseList[courseIndex];
+
+                foreach (string grade in possibleGrades)
+                {
+                    double gradePoints = gpaCalculator.GetGradePoints(grade);
+
+                    double qualityPoints = gradePoints * course.Credits;
+
+                    currentCombination.Add(
+                        new GradeRecommendation
+                        {
+                            CourseName = course.Name,
+                            Credits = course.Credits,
+                            Grade = grade
+                        });
+
+                    Search(courseIndex + 1, newQualityPoints + qualityPoints);
+
+                    // BACKTRACK:
+                    // Undo the choice before trying another grade.
+                    currentCombination.RemoveAt(currentCombination.Count - 1);
+                }
             }
 
             Search(0, 0);
 
             result.NodesVisited = nodesVisited;
+            result.BranchesPruned = branchesPruned;
 
             if (bestCombination != null)
             {
