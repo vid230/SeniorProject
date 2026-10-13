@@ -102,6 +102,41 @@ namespace AubgAcademicTracker.Services
                 // Even all A grades cannot reach the target.
                 if (maximumPointsFromIndex[courseIndex] < pointsNeeded)
                 {
+                    branchesPruned++;
+                    return null;
+                }
+
+                // Even all D grades already reach the target.
+                // Since D is the lowest passing grade, this is
+                // automatically the easiest solution from here.
+                if (minimumPointsFromIndex[courseIndex] >= pointsNeeded)
+                {
+                    branchesPruned++;
+
+                    List<string> lowestGrades = new();
+
+                    for (int i = courseIndex; i < courseCount; i++)
+                    {
+                        lowestGrades.Add("D");
+                    }
+
+                    return new MemoSolution(minimumPointsFromIndex[courseIndex], lowestGrades);
+                }
+
+                var key = (courseIndex, pointsNeeded);
+
+                if (memo.TryGetValue(key, out MemoSolution? cached))
+                {
+                    memoHits++;
+                    return cached;
+                }
+
+                RemainingCourse course = remainingCourseList[courseIndex];
+
+                MemoSolution? bestSolution = null;
+
+                foreach (string grade)
+                {
                     //
                 }
             }
