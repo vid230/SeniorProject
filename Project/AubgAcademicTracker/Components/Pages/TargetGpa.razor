@@ -92,9 +92,16 @@ else
         </tbody>
     </table>
 
-    <button class="btn btn-success" @onclick="Solve">
-        Find Required Grades
+    <button class="btn btn-success" @onclick="SolveAsync" disabled="@isSolving">
+        @(isSolving ? "Calculating..." : "Find Required Grades")
     </button>
+
+    @if (isSolving)
+    {
+        <div class="alert alert-info mt-3">
+            Calculating grade combinations...
+        </div>
+    }
 }
 
 @if (result != null)
@@ -182,6 +189,8 @@ else
 
     private double targetGpa = 3.00;
 
+    private bool isSolving = false;
+
     protected override async Task OnInitializedAsync()
     {
         currentCourses = await CourseService.GetCoursesAsync();
@@ -208,8 +217,21 @@ else
         result = null;
     }
 
-    private void Solve()
+    private async Task SolveAsync()
     {
-        result = TargetGpaSolver.Solve(currentCourses, remainingCourses, targetGpa);
+        result = null;
+        isSolving = true;
+
+        await InvokeAsync(StateHasChanged);
+        await Task.Yield();
+
+        try
+        {
+            result = await Task.Run(() => TargetGpaSolver.Solve(currentCourses, remainingCourses, targetGpa));
+        }
+        finally
+        {
+            isSolving = false;
+        }
     }
 }
