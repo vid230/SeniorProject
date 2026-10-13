@@ -70,9 +70,40 @@ namespace AubgAcademicTracker.Services
 
             int maximumGradePoints = ToScaledGradePoints("A");
 
-            for ()
+            for (int i = courseCount - 1; i >= 0; i--)
             {
-                //
+                int credits = remainingCourseList[i].Credits;
+
+                minimumPointsFromIndex[i] = minimumPointsFromIndex[i + 1] + minimumGradePoints * credits;
+
+                maximumPointsFromIndex[i] = maximumPointsFromIndex[i + 1] + maximumGradePoints * credits;
+            }
+
+            long nodesVisited = 0;
+            long branchesPruned = 0;
+            long memoHits = 0;
+
+            Dictionary<(int Index, int PointsNeeded), MemoSolution?> memo = new();
+
+            MemoSolution? Search(int courseIndex, int pointsNeeded)
+            {
+                nodesVisited++;
+
+                if (courseIndex == courseCount)
+                {
+                    if (pointsNeeded <= 0)
+                    {
+                        return new MemoSolution(0, new List<string>());
+                    }
+
+                    return null;
+                }
+
+                // Even all A grades cannot reach the target.
+                if (maximumPointsFromIndex[courseIndex] < pointsNeeded)
+                {
+                    //
+                }
             }
         }
     }
