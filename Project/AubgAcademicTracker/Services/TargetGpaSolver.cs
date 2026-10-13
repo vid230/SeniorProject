@@ -9,16 +9,16 @@ namespace AubgAcademicTracker.Services
 
         private readonly string[] possibleGrades =
         {
-            "A",
-            "A-",
-            "B+",
-            "B",
-            "B-",
-            "C+",
-            "C",
-            "C-",
+            "D",
             "D+",
-            "D"
+            "C-",
+            "C",
+            "C+",
+            "B-",
+            "B",
+            "B+",
+            "A-",
+            "A"
         };
 
         public TargetGpaSolver(GpaCalculator gpaCalculator, CreditCalculator creditCalculator)
@@ -36,11 +36,10 @@ namespace AubgAcademicTracker.Services
 
             List<Course> currentCourseList = currentCourses.ToList();
 
-            List<RemainingCourse> remainingCourseList = remainingCourses.ToList();
+            // Higher-credit courses first generally make the bounds stronger earlier in the search.
+            List<RemainingCourse> remainingCourseList = remainingCourses.OrderByDescending(course => course.Credits).ToList();
 
             int existingCredits = creditCalculator.CalculateAttemptedCredits(currentCourseList);
-
-            double existingQualityPoints = currentCourseList.Sum(course => gpaCalculator.GetGradePoints(course.Grade) * course.Credits);
 
             int remainingCredits = remainingCourseList.Sum(course => course.Credits);
 
@@ -53,169 +52,28 @@ namespace AubgAcademicTracker.Services
                 return result;
             }
 
-            List<GradeRecommendation> currentCombination = new();
+            // Grade points are multiplied by 10 so that search
+            // states use integers rather than floating-point values.
+            int existingPoints = currentCourseList.Sum(course => ToScaledGradePoints(course.Grade) * course.Credits);
 
-            List<GradeRecommendation>? bestCombination = null;
+            int requiredTotalPoints = (int) Math.Ceiling(targetGpa * finalCredits * 10.0 - 0.0000001);
 
-            double bestNewQualityPoints = double.PositiveInfinity;
+            int requiredNewPoints = requiredTotalPoints - existingPoints;
 
-            double bestProjectedGpa = 0;
+            int courseCount = remainingCourseList.Count;
 
-            long nodesVisited = 0;
-            long branchesPruned = 0;
+            int[] minimumPointsFromIndex = new int[courseCount + 1];
 
-            // Stores how many credits remain from each position onward.
-            int[] remainingCreditsFromIndex = new int[remainingCourseList.Count + 1];
+            int[] maximumPointsFromIndex = new int[courseCount + 1];
 
-            for (int i = remainingCourseList.Count - 1; i >= 0; i--)
+            int minimumGradePoints = ToScaledGradePoints("D");
+
+            int maximumGradePoints = ToScaledGradePoints("A");
+
+            for ()
             {
-                remainingCreditsFromIndex[i] = remainingCreditsFromIndex[i + 1] + remainingCourseList[i].Credits;
+                //
             }
-
-            double highestGradePoints = gpaCalculator.GetGradePoints("A");
-
-            double lowestPassingGradePoints = gpaCalculator.GetGradePoints("D");
-
-            void SaveCombination(double newQualityPoints, double finalGpa, IEnumerable<GradeRecommendation> combination)
-            {
-                if (newQualityPoints >= bestNewQualityPoints)
-                {
-                    return;
-                }
-
-                bestNewQualityPoints = newQualityPoints;
-                bestProjectedGpa = finalGpa;
-
-                bestCombination = combination.Select(item =>
-                            new GradeRecommendation
-                            {
-                                CourseName = item.CourseName,
-                                Credits = item.Credits,
-                                Grade = item.Grade
-                            }).ToList();
-            }
-
-            void Search(int courseIndex, double newQualityPoints)
-            {
-                nodesVisited++;
-
-                // BASE CASE:
-                // Every remaining course has received a grade.
-                if (courseIndex == remainingCourseList.Count)
-                {
-                    double finalGpa = (existingQualityPoints + newQualityPoints) / finalCredits;
-
-                    if (finalGpa >= targetGpa)
-                    {
-                        SaveCombination(newQualityPoints, finalGpa, currentCombination);
-                    }
-
-                    return;
-                }
-
-                int creditsStillUnassigned = remainingCreditsFromIndex[courseIndex];
-
-                // PRUNING RULE 1:
-                // Assume every remaining course receives an A.
-                // If the target is still impossible, stop this branch.
-                double bestPossibleAdditionalPoints = creditsStillUnassigned * highestGradePoints;
-
-                double bestPossibleFinalGpa = (existingQualityPoints + newQualityPoints + bestPossibleAdditionalPoints) / finalCredits;
-
-                if (bestPossibleFinalGpa < targetGpa)
-                {
-                    branchesPruned++;
-                    return;
-                }
-
-                // PRUNING RULE 2:
-                // Assume every remaining course receives a D.
-                // If that already reaches the target, D for all
-                // remaining courses is the easiest completion
-                // of this branch.
-                double minimumAdditionalPoints = creditsStillUnassigned * lowestPassingGradePoints;
-
-                double minimumPossibleFinalGpa = (existingQualityPoints + newQualityPoints + minimumAdditionalPoints) / finalCredits;
-
-                if (minimumPossibleFinalGpa >= targetGpa)
-                {
-                    List<GradeRecommendation> candidate = currentCombination.Select(item =>
-                                new GradeRecommendation
-                                {
-                                    CourseName = item.CourseName,
-                                    Credits = item.Credits,
-                                    Grade = item.Grade
-                                }).ToList();
-
-                    for (int i = courseIndex; i < remainingCourseList.Count; i++)
-                    {
-                        RemainingCourse remainingCourse = remainingCourseList[i];
-
-                        candidate.Add(
-                            new GradeRecommendation
-                            {
-                                CourseName = remainingCourse.Name,
-                                Credits = remainingCourse.Credits,
-                                Grade = "D"
-                            });
-                    }
-
-                    double candidateQualityPoints = newQualityPoints + minimumAdditionalPoints;
-
-                    SaveCombination(candidateQualityPoints, minimumPossibleFinalGpa, candidate);
-
-                    branchesPruned++;
-
-                    return;
-                }
-
-                // PRUNING RULE 3:
-                // If even the cheapest possible continuation
-                // cannot improve the best solution already found,
-                // there is no reason to search this branch.
-                if ((bestCombination != null) && (newQualityPoints + minimumAdditionalPoints >= bestNewQualityPoints))
-                {
-                    branchesPruned++;
-                    return;
-                }
-
-                RemainingCourse course = remainingCourseList[courseIndex];
-
-                foreach (string grade in possibleGrades)
-                {
-                    double gradePoints = gpaCalculator.GetGradePoints(grade);
-
-                    double qualityPoints = gradePoints * course.Credits;
-
-                    currentCombination.Add(
-                        new GradeRecommendation
-                        {
-                            CourseName = course.Name,
-                            Credits = course.Credits,
-                            Grade = grade
-                        });
-
-                    Search(courseIndex + 1, newQualityPoints + qualityPoints);
-
-                    // BACKTRACK:
-                    // Undo the choice before trying another grade.
-                    currentCombination.RemoveAt(currentCombination.Count - 1);
-                }
-            }
-
-            Search(0, 0);
-
-            result.NodesVisited = nodesVisited;
-            result.BranchesPruned = branchesPruned;
-
-            if (bestCombination != null)
-            {
-                result.IsAchievable = true;
-                result.ProjectedGpa = bestProjectedGpa;
-                result.Recommendations = bestCombination;
-            }
-
-            return result;
         }
     }
 }
