@@ -52,11 +52,10 @@ namespace AubgAcademicTracker.Services
                 return result;
             }
 
-            // Grade points are multiplied by 10 so that search
-            // states use integers rather than floating-point values.
+            // Grade points are multiplied by 10 so that search states use integers rather than floating-point values.
             int existingPoints = currentCourseList.Sum(course => ToScaledGradePoints(course.Grade) * course.Credits);
 
-            int requiredTotalPoints = (int) Math.Ceiling(targetGpa * finalCredits * 10.0 - 0.0000001);
+            int requiredTotalPoints = (int)Math.Ceiling(targetGpa * finalCredits * 10.0 - 0.0000001);
 
             int requiredNewPoints = requiredTotalPoints - existingPoints;
 
@@ -106,8 +105,7 @@ namespace AubgAcademicTracker.Services
                     return null;
                 }
 
-                // Even all D grades already reach the target.
-                // Since D is the lowest passing grade, this is
+                // Even all D grades already reach the target. Since D is the lowest passing grade, this is
                 // automatically the easiest solution from here.
                 if (minimumPointsFromIndex[courseIndex] >= pointsNeeded)
                 {
@@ -150,10 +148,11 @@ namespace AubgAcademicTracker.Services
 
                     if ((bestSolution == null) || (totalPoints < bestSolution.TotalPoints))
                     {
-                        List<string> grades = new()
-                        {
-                            grade
-                        };
+                        List<string> grades =
+                            new()
+                            {
+                                grade
+                            };
 
                         grades.AddRange(childSolution.Grades);
 
@@ -187,12 +186,40 @@ namespace AubgAcademicTracker.Services
 
             double totalQualityPoints = (existingPoints + solution.TotalPoints) / 10.0;
 
-            result.ProjectedGpa = testQualityPoints / finalCredits;
+            result.ProjectedGpa = totalQualityPoints / finalCredits;
 
             for (int i = 0; i < courseCount; i++)
             {
-                Re
+                RemainingCourse course = remainingCourseList[i];
+
+                result.Recommendations.Add(
+                    new GradeRecommendation
+                    {
+                        CourseName = course.Name,
+                        Credits = course.Credits,
+                        Grade = solution.Grades[i]
+                    });
             }
+
+            return result;
+        }
+
+        private int ToScaledGradePoints(string grade)
+        {
+            return (int) Math.Round(gpaCalculator.GetGradePoints(grade) * 10);
+        }
+
+        private sealed class MemoSolution
+        {
+            public MemoSolution(int totalPoints, List<string> grades)
+            {
+                TotalPoints = totalPoints;
+                Grades = grades;
+            }
+
+            public int TotalPoints { get; }
+
+            public List<string> Grades { get; }
         }
     }
 }
