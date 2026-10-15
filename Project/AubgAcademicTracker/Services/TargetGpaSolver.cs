@@ -135,10 +135,63 @@ namespace AubgAcademicTracker.Services
 
                 MemoSolution? bestSolution = null;
 
-                foreach (string grade)
+                foreach (string grade in possibleGrades)
                 {
-                    //
+                    int contribution = ToScaledGradePoints(grade) * course.Credits;
+
+                    MemoSolution? childSolution = Search(courseIndex + 1, pointsNeeded - contribution);
+
+                    if (childSolution == null)
+                    {
+                        continue;
+                    }
+
+                    int totalPoints = contribution + childSolution.TotalPoints;
+
+                    if ((bestSolution == null) || (totalPoints < bestSolution.TotalPoints))
+                    {
+                        List<string> grades = new()
+                        {
+                            grade
+                        };
+
+                        grades.AddRange(childSolution.Grades);
+
+                        bestSolution = new MemoSolution(totalPoints, grades);
+
+                        // Cannot mathematically do better than exactly meeting the required points.
+                        if (totalPoints == pointsNeeded)
+                        {
+                            break;
+                        }
+                    }
                 }
+
+                memo[key] = bestSolution;
+
+                return bestSolution;
+            }
+
+            MemoSolution? solution = Search(0, requiredNewPoints);
+
+            result.NodesVisited = nodesVisited;
+            result.BranchesPruned = branchesPruned;
+            result.MemoHits = memoHits;
+
+            if (solution == null)
+            {
+                return result;
+            }
+
+            result.IsAchievable = true;
+
+            double totalQualityPoints = (existingPoints + solution.TotalPoints) / 10.0;
+
+            result.ProjectedGpa = testQualityPoints / finalCredits;
+
+            for (int i = 0; i < courseCount; i++)
+            {
+                Re
             }
         }
     }
