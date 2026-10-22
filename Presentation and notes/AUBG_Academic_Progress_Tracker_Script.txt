@@ -1,31 +1,39 @@
-AUBG ACADEMIC PROGRESS TRACKER — 5-MINUTE VIDEO SCRIPT
+Slide 1 — Title
+Hello, my name is Valeri Dimitrov, and this is my Senior Project, the AUBG Academic Progress Tracker.
+The goal of the project is to help students track their academic progress and plan future results.
 
-Slide 1 — 0:00–0:20
-Hello. This is a short progress presentation of my senior project, the AUBG Academic Progress Tracker. The project started as a simple GPA calculator, but it has developed into a full Blazor application with persistent storage, course and semester management, academic statistics, and now a much stronger algorithmic component.
+Slide 2 — Problem and Goal
+Students need to keep track of courses, grades, credits, semesters, and GPA.
+My application puts this information in one place and also helps the user explore possible future academic outcomes.
 
-Slide 2 — 0:20–0:50
-The goal is not just to display grades. The application combines three ideas: tracking the academic record, calculating the student's current status, and planning future outcomes. It is designed as a local personal tool, so the main focus is software structure, reliable calculations, persistence, and algorithmic decision support.
+Slide 3 — System Architecture
+The application is built with C#, Blazor, Entity Framework Core, and SQLite.
+The user interface is separated from the business logic and the database, which makes the project easier to maintain and test.
 
-Slide 3 — 0:50–1:15
-The project uses a layered architecture. Razor components handle presentation. Services contain application rules and calculations. Entity Framework Core provides the data-access layer, and SQLite stores the persistent data locally. This separation is important because the more advanced GPA algorithms can be developed and tested independently from the user interface.
+Slide 4 — Data Model
+The main database entities are Course and Semester.
+One semester can contain many courses, and each course belongs to one semester through a foreign key.
 
-Slide 4 — 1:15–1:40
-The data model currently has two persistent entities. A semester can contain many courses, and each course belongs to one semester through SemesterId. SQLite replaced the original temporary list, so data now survives application restarts. Entity Framework Core migrations manage the schema, while the local database file itself is excluded from Git.
+Slide 5 — Features Completed
+So far, the application supports adding, editing, deleting, and viewing courses and semesters.
+It also calculates cumulative GPA, semester GPA, earned credits, attempted credits, and completed courses.
 
-Slide 5 — 1:40–2:15
-At this point the application has the complete core workflow. Courses support full CRUD operations, semesters are stored as real entities, the dashboard shows cumulative GPA and credit statistics, and semester GPA is calculated from related courses. I also added two planning features: the manual What-if Calculator and the automatic Target GPA Solver.
+Slide 6 — What-if GPA Calculator
+The What-if Calculator allows the user to enter hypothetical future courses and grades.
+It calculates a projected GPA without saving those hypothetical courses into the real database.
 
-Slide 6 — 2:15–2:45
-The What-if Calculator was the first planning feature. It combines the real academic record with temporary future courses and calculates a projected GPA, but the hypothetical courses are never saved. This was a useful design step, although algorithmically it still used the same weighted-average calculation as the dashboard. That led to the next feature.
+Slide 7 — Target GPA Solver
+The Target GPA Solver works in the opposite direction.
+The user gives a target GPA and the remaining courses, and the program searches for grades that can reach that target.
 
-Slide 7 — 2:45–3:15
-The Target GPA Solver reverses the What-if problem. The user gives a target GPA and a list of remaining courses, but does not enter future grades. The program has to search for grades that can achieve the target. Because many combinations may be valid, this becomes a combinatorial search problem rather than a single weighted-average formula.
+Slide 8 — Algorithm 1: Backtracking
+The first main algorithm is recursive backtracking, which tries different grade combinations for the remaining courses.
+I added pruning so the program can stop searching a branch when it is already impossible or unnecessary to continue.
 
-Slide 8 — 3:15–4:00
-The first major algorithm is recursive backtracking. Every level represents a remaining course and every branch represents a possible grade. In the worst case this grows exponentially, O of g to the n. To reduce the search, I added pruning. Impossible branches are cut when even all A grades cannot reach the target, and easy branches finish early when all D grades are already enough.
+Slide 9 — Algorithm 2: Memoization
+Backtracking was still too slow for large reachable cases, because many identical subproblems were calculated again and again.
+I added dynamic programming through memoization, which saves solved states and reuses them, making the solver much faster.
 
-Slide 9 — 4:00–4:40
-Pruning helped, but large reachable searches were still slow because different grade combinations could lead to the same remaining problem. The second algorithmic approach is dynamic programming through memoization. A state is defined by the current course index and the points still needed. Once a state is solved, its result is cached and reused. This produced the major performance improvement in the solver.
-
-Slide 10 — 4:40–5:00
-The core application is now working and the algorithmic direction is much stronger. Two substantial approaches are implemented: backtracking with pruning, and dynamic programming through memoization. The next major stage will add the third distinct algorithm through a prerequisite graph and topological sort, followed by unit testing, error handling, and final UI and thesis polish.
+Slide 10 — Current Status and Next Steps
+The main tracking features and the Target GPA Solver are already working.
+Next, I plan to add degree progress and a prerequisite planner using a graph and topological sort, which will provide the third main algorithm.
