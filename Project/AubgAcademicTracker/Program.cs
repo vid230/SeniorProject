@@ -19,6 +19,8 @@ builder.Services.AddSingleton<GpaCalculator>();
 builder.Services.AddSingleton<CreditCalculator>();
 builder.Services.AddSingleton<WhatIfCalculator>();
 builder.Services.AddSingleton<TargetGpaSolver>();
+builder.Services.AddSingleton<DegreeProgressService>();
+builder.Services.AddSingleton<CoursePlannerService>();
 
 var app = builder.Build();
 
