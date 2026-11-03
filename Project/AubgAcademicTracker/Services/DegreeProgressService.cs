@@ -17,7 +17,7 @@ namespace AubgAcademicTracker.Services
 
             int remainingCredits = Math.Max(0, requiredCredits - earnedCredits);
 
-            double progressPercentage = (requiredCredits == 0) ? 0 : Math.Min(100, (double)earnedCredits / requiredCredits * 100);
+            double progressPercentage = (requiredCredits == 0) ? 0 : Math.Min(100, (double) earnedCredits / requiredCredits * 100);
 
             return new DegreeProgressResult
             {
