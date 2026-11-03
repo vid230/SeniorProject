@@ -33,8 +33,7 @@ namespace AubgAcademicTracker.Services
                 }
             }
 
-            // Adjacency list:
-            // prerequisite -> courses that depend on it
+            // Adjacency list: prerequisite -> courses that depend on it
             Dictionary<string, HashSet<string>> graph = new(StringComparer.OrdinalIgnoreCase);
 
             // Number of prerequisites for each course
@@ -118,8 +117,7 @@ namespace AubgAcademicTracker.Services
 
             result.EdgeCount = edgeCount;
 
-            // If not every vertex was processed,
-            // a directed cycle exists.
+            // If not every vertex was processed, a directed cycle exists.
             if (orderedCourses.Count != courseDictionary.Count)
             {
                 result.HasCycle = true;
@@ -130,6 +128,12 @@ namespace AubgAcademicTracker.Services
             }
 
             result.Success = true;
+
+            result.OrderedCourses = orderedCourses;
+
+            result.Message = "A valid course order was found.";
+
+            return result;
         }
     }
 }
