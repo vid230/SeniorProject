@@ -12,61 +12,79 @@
 
 @if (progress == null)
 {
-	<p>Loading...</p>
+    <p>Loading...</p>
 }
 else
 {
-	<div class="row">
+    <div class="row">
 
-		<div class="col-md-4 mb-3">
-			<div class="card">
-				<div class="card-body">
-					<h5>Earned Credits</h5>
-					<h2>@progress.EarnedCredits</h2>
-				</div>
-			</div>
-		</div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
 
-		<div class="col-md-4 mb-3">
-			<div class="card">
-				<div class="card-body">
-					<h5>Remaining Credits</h5>
-					<h2>@progress.RemainingCredits</h2>
-				</div>
-			</div>
-		</div>
+                    <h5>Earned Credits</h5>
 
-		<div class="col-md-4 mb-3">
-			<div class="card">
-				<div class="card-body">
+                    <h2>
+                        @progress.EarnedCredits
+                    </h2>
 
-					<h5>Progress</h5>
+                </div>
+            </div>
+        </div>
 
-					<h2>
-						@progress.ProgressPercentage.ToString("0.0")%
-					</h2>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
 
-				</div>
-			</div>
-		</div>
+                    <h5>Remaining Credits</h5>
 
-	</div>
+                    <h2>
+                        @progress.RemainingCredits
+                    </h2>
 
-	<div class="progress mt-3" style="height: 30px;">
+                </div>
+            </div>
+        </div>
 
-		<div class="progress-bar" role="progressbar" style="@($"width: {progress.ProgressPercentage}%")">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
 
-			@progress.ProgressPercentage.ToString("0.0")%
+                    <h5>Progress</h5>
 
-		</div>
+                    <h2>
+                        @progress.ProgressPercentage.ToString("0.0")%
+                    </h2>
 
-	</div>
+                </div>
+            </div>
+        </div>
 
-	<p class="mt-3">
-		@progress.EarnedCredits of @progress.RequiredCredits required credits completed.
-	</p>
+    </div>
+
+    <div class="progress mt-3" style="height: 30px;">
+
+        <div class="progress-bar" role="progressbar" style="@($"width: {progress.ProgressPercentage}%")">
+
+            @progress.ProgressPercentage.ToString("0.0")%
+
+        </div>
+
+    </div>
+
+    <p class="mt-3">
+        @progress.EarnedCredits of @progress.RequiredCredits required credits completed.
+    </p>
 }
 
-@code {
+@code
+{
+    private DegreeProgressResult? progress;
 
+    protected override async Task OnInitializedAsync()
+    {
+        List<Course> courses = await CourseService.GetCoursesAsync();
+
+        progress = DegreeProgressService.CalculateProgress(courses);
+    }
 }
