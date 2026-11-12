@@ -137,8 +137,56 @@ else
 
 		</div>
 
-		<div class="mb-3"></div>
+		<div class="mb-3">
+
+			<label class="form-label">
+				Dependent Course
+			</label>
+
+			<InputSelect class="form-select" @bind-Value="newRelation.CourseCode">
+
+				<option value="">
+					-- Select course --
+				</option>
+
+				@foreach (PlannedCourse course in plannedCourses)
+				{
+					<option value="@course.Code">
+						@course.Code - @course.Name
+					</option>
+				}
+
+			</InputSelect>
+
+		</div>
+
+		<button type="submit" class="btn btn-primary">
+			Add Prerequisite
+		</button>
+
 	</EditForm>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+	<div class="alert alert-danger mt-3">
+		@errorMessage
+	</div>
+}
+
+<hr />
+
+<h3>Prerequisite Relationships</h3>
+
+@if (relations.Count == 0)
+{
+	<div class="alert alert-info">
+		No prerequisite relationships have been added.
+	</div>
+}
+else
+{
+	<table class="table table-bordered"></table>
 }
 
 @code {
