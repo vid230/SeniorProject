@@ -60,6 +60,87 @@
 
 <hr />
 
+<h3>Planned Courses</h3>
+
+@if (plannedCourses.Count == 0)
+{
+	<div class="alert alert-info">
+		No planned courses have been added yet.
+	</div>
+}
+else
+{
+	<table class="table table-striped">
+
+		<thead>
+			<tr>
+				<th>Code</th>
+				<th>Course Name</th>
+				<th>Credits</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+
+		<tbody>
+
+			@foreach (PlannedCourse course in plannedCourses)
+			{
+				<tr>
+					<td>@course.Code</td>
+					<td>@course.Name</td>
+					<td>@course.Credits</td>
+
+					<td>
+						<button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveCourse(course)">
+							Remove
+						</button>
+					</td>
+				</tr>
+			}
+
+		</tbody>
+	</table>
+}
+
+@if (plannedCourses.Count >= 2)
+{
+	<hr />
+
+	<h3>2. Add Prerequisite Relationship</h3>
+
+	<p class="text-muted">
+		Select which course must be completed before another course.
+	</p>
+
+	<EditForm Model="@newRelation" OnInvalidSubmit="@AddRelation">
+
+		<div class="mb-3">
+
+			<label class="form-label">
+				Prerequisite Course
+			</label>
+
+			<InputSelect class="form-select" @bind-Value="newRelation.PrerequisiteCode">
+
+				<option value="">
+					-- Select prerequisite --
+				</option>
+
+				@foreach (PlannedCourse course in plannedCourses)
+				{
+					<option value="@course.Code">
+						@course.Code - @course.Name
+					</option>
+				}
+
+			</InputSelect>
+
+		</div>
+
+		<div class="mb-3"></div>
+	</EditForm>
+}
+
 @code {
 
 }
