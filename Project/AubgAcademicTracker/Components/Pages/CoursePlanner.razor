@@ -186,7 +186,72 @@ else
 }
 else
 {
-	<table class="table table-bordered"></table>
+	<table class="table table-bordered">
+
+		<thead>
+			<tr>
+				<th>Prerequisite</th>
+				<th></th>
+				<th>Course</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+
+		<tbody>
+
+			@foreach (PrerequisiteRelation relation in relations)
+			{
+				<tr>
+					<td>
+						@relation.PrerequisiteCode
+					</td>
+
+					<td>
+						->
+					</td>
+
+					<td>
+						@relation.CourseCode
+					</td>
+
+					<td>
+						<button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveRelation(relation)">
+							Remove
+						</button>
+					</td>
+				</tr>
+			}
+
+		</tbody>
+
+	</table>
+}
+
+@if (plannedCourse.Count > 0)
+{
+	<hr />
+
+	<h3>3. Generate Course Order</h3>
+
+	<button class="btn btn-success me-2" @onclick="GeneratePlan">
+		Generate Course Order
+	</button>
+
+	<button class="btn btn-secondary" @onclick="ClearPlanner">
+		Clear Planner
+	</button>
+}
+
+@if (result != null)
+{
+	<hr />
+
+	<h3>Course Plan Result</h3>
+
+	@if (result.Success)
+	{
+		//
+	}
 }
 
 @code {
