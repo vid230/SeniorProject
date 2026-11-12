@@ -10,51 +10,51 @@
 <h1>Course Prerequisite Planner</h1>
 
 <p class="text-muted">
-	Add the courses you want to plan, define prerequisite relationships, and generate a valid course order.
+    Add the courses you want to plan, define prerequisite relationships, and generate a valid course order.
 </p>
 
 <hr />
 
 <h3>1. Add Planned Course</h3>
 
-<EditForm Model="@newCourse" OnInvalidSubmit="@AddCourse">
+<EditForm Model="@newCourse" OnValidSubmit="@AddCourse">
 
-	<DataAnnotationsValidator></DataAnnotationsValidator>
-	<ValidationSummary></ValidationSummary>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-	<div class="mb-3">
-		<label class="form-label">
-			Course Code
-		</label>
+    <div class="mb-3">
+        <label class="form-label">
+            Course Code
+        </label>
 
-		<InputText class="form-control" @bind-Value="newCourse.Code"></InputText>
+        <InputText class="form-control" @bind-Value="newCourse.Code" />
 
-		<ValidationMessage For="@(() => newCourse.Code)"></ValidationMessage>
-	</div>
+        <ValidationMessage For="@(() => newCourse.Code)" />
+    </div>
 
-	<div class="mb-3">
-		<label class="form-label">
-			Course Name
-		</label>
+    <div class="mb-3">
+        <label class="form-label">
+            Course Name
+        </label>
 
-		<InputText class="form-control" @bind-Value="newCourse.Name"></InputText>
+        <InputText class="form-control" @bind-Value="newCourse.Name" />
 
-		<ValidationMessage For="@(() => newCourse.Name)"></ValidationMessage>
-	</div>
+        <ValidationMessage For="@(() => newCourse.Name)" />
+    </div>
 
-	<div class="mb-3">
-		<label class="form-label">
-			Credits
-		</label>
+    <div class="mb-3">
+        <label class="form-label">
+            Credits
+        </label>
 
-		<InputNumber class="form-control" @bind-Value="newCourse.Credits"></InputNumber>
+        <InputNumber class="form-control" @bind-Value="newCourse.Credits" />
 
-		<ValidationMessage For="@(() => newCourse.Credits)"></ValidationMessage>
-	</div>
+        <ValidationMessage For="@(() => newCourse.Credits)" />
+    </div>
 
-	<button type="submit" class="btn btn-primary">
-		Add Planned Course
-	</button>
+    <button type="submit" class="btn btn-primary">
+        Add Planned Course
+    </button>
 
 </EditForm>
 
@@ -64,114 +64,114 @@
 
 @if (plannedCourses.Count == 0)
 {
-	<div class="alert alert-info">
-		No planned courses have been added yet.
-	</div>
+    <div class="alert alert-info">
+        No planned courses have been added yet.
+    </div>
 }
 else
 {
-	<table class="table table-striped">
+    <table class="table table-striped">
 
-		<thead>
-			<tr>
-				<th>Code</th>
-				<th>Course Name</th>
-				<th>Credits</th>
-				<th>Action</th>
-			</tr>
-		</thead>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Course Name</th>
+                <th>Credits</th>
+                <th>Action</th>
+            </tr>
+        </thead>
 
-		<tbody>
+        <tbody>
 
-			@foreach (PlannedCourse course in plannedCourses)
-			{
-				<tr>
-					<td>@course.Code</td>
-					<td>@course.Name</td>
-					<td>@course.Credits</td>
+            @foreach (PlannedCourse course in plannedCourses)
+            {
+                <tr>
+                    <td>@course.Code</td>
+                    <td>@course.Name</td>
+                    <td>@course.Credits</td>
 
-					<td>
-						<button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveCourse(course)">
-							Remove
-						</button>
-					</td>
-				</tr>
-			}
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveCourse(course)">
+                            Remove
+                        </button>
+                    </td>
+                </tr>
+            }
 
-		</tbody>
-	</table>
+        </tbody>
+    </table>
 }
 
 @if (plannedCourses.Count >= 2)
 {
-	<hr />
+    <hr />
 
-	<h3>2. Add Prerequisite Relationship</h3>
+    <h3>2. Add Prerequisite Relationship</h3>
 
-	<p class="text-muted">
-		Select which course must be completed before another course.
-	</p>
+    <p class="text-muted">
+        Select which course must be completed before another course.
+    </p>
 
-	<EditForm Model="@newRelation" OnInvalidSubmit="@AddRelation">
+    <EditForm Model="@newRelation" OnValidSubmit="@AddRelation">
 
-		<div class="mb-3">
+        <div class="mb-3">
 
-			<label class="form-label">
-				Prerequisite Course
-			</label>
+            <label class="form-label">
+                Prerequisite Course
+            </label>
 
-			<InputSelect class="form-select" @bind-Value="newRelation.PrerequisiteCode">
+            <InputSelect class="form-select" @bind-Value="newRelation.PrerequisiteCode">
 
-				<option value="">
-					-- Select prerequisite --
-				</option>
+                <option value="">
+                    -- Select prerequisite --
+                </option>
 
-				@foreach (PlannedCourse course in plannedCourses)
-				{
-					<option value="@course.Code">
-						@course.Code - @course.Name
-					</option>
-				}
+                @foreach (PlannedCourse course in plannedCourses)
+                {
+                    <option value="@course.Code">
+                        @course.Code - @course.Name
+                    </option>
+                }
 
-			</InputSelect>
+            </InputSelect>
 
-		</div>
+        </div>
 
-		<div class="mb-3">
+        <div class="mb-3">
 
-			<label class="form-label">
-				Dependent Course
-			</label>
+            <label class="form-label">
+                Dependent Course
+            </label>
 
-			<InputSelect class="form-select" @bind-Value="newRelation.CourseCode">
+            <InputSelect class="form-select" @bind-Value="newRelation.CourseCode">
 
-				<option value="">
-					-- Select course --
-				</option>
+                <option value="">
+                    -- Select course --
+                </option>
 
-				@foreach (PlannedCourse course in plannedCourses)
-				{
-					<option value="@course.Code">
-						@course.Code - @course.Name
-					</option>
-				}
+                @foreach (PlannedCourse course in plannedCourses)
+                {
+                    <option value="@course.Code">
+                        @course.Code - @course.Name
+                    </option>
+                }
 
-			</InputSelect>
+            </InputSelect>
 
-		</div>
+        </div>
 
-		<button type="submit" class="btn btn-primary">
-			Add Prerequisite
-		</button>
+        <button type="submit" class="btn btn-primary">
+            Add Prerequisite
+        </button>
 
-	</EditForm>
+    </EditForm>
 }
 
 @if (!string.IsNullOrEmpty(errorMessage))
 {
-	<div class="alert alert-danger mt-3">
-		@errorMessage
-	</div>
+    <div class="alert alert-danger mt-3">
+        @errorMessage
+    </div>
 }
 
 <hr />
@@ -180,226 +180,254 @@ else
 
 @if (relations.Count == 0)
 {
-	<div class="alert alert-info">
-		No prerequisite relationships have been added.
-	</div>
+    <div class="alert alert-info">
+        No prerequisite relationships have been added.
+    </div>
 }
 else
 {
-	<table class="table table-bordered">
+    <table class="table table-bordered">
 
-		<thead>
-			<tr>
-				<th>Prerequisite</th>
-				<th></th>
-				<th>Course</th>
-				<th>Action</th>
-			</tr>
-		</thead>
+        <thead>
+            <tr>
+                <th>Prerequisite</th>
+                <th></th>
+                <th>Course</th>
+                <th>Action</th>
+            </tr>
+        </thead>
 
-		<tbody>
+        <tbody>
 
-			@foreach (PrerequisiteRelation relation in relations)
-			{
-				<tr>
-					<td>
-						@relation.PrerequisiteCode
-					</td>
+            @foreach (PrerequisiteRelation relation in relations)
+            {
+                <tr>
+                    <td>
+                        @relation.PrerequisiteCode
+                    </td>
 
-					<td>
-						->
-					</td>
+                    <td>
+                        →
+                    </td>
 
-					<td>
-						@relation.CourseCode
-					</td>
+                    <td>
+                        @relation.CourseCode
+                    </td>
 
-					<td>
-						<button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveRelation(relation)">
-							Remove
-						</button>
-					</td>
-				</tr>
-			}
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveRelation(relation)">
+                            Remove
+                        </button>
+                    </td>
+                </tr>
+            }
 
-		</tbody>
+        </tbody>
 
-	</table>
+    </table>
 }
 
-@if (plannedCourse.Count > 0)
+@if (plannedCourses.Count > 0)
 {
-	<hr />
+    <hr />
 
-	<h3>3. Generate Course Order</h3>
+    <h3>3. Generate Course Order</h3>
 
-	<button class="btn btn-success me-2" @onclick="GeneratePlan">
-		Generate Course Order
-	</button>
+    <button class="btn btn-success me-2" @onclick="GeneratePlan">
+        Generate Course Order
+    </button>
 
-	<button class="btn btn-secondary" @onclick="ClearPlanner">
-		Clear Planner
-	</button>
+    <button class="btn btn-secondary" @onclick="ClearPlanner">
+        Clear Planner
+    </button>
 }
 
 @if (result != null)
 {
-	<hr />
+    <hr />
 
-	<h3>Course Plan Result</h3>
+    <h3>Course Plan Result</h3>
 
-	@if (result.Success)
-	{
-		<div class="alert alert-success">
-			@result.Message
-		</div>
+    @if (result.Success)
+    {
+        <div class="alert alert-success">
+            @result.Message
+        </div>
 
-		<table class="table table-striped">
+        <table class="table table-striped">
 
-			<thead>
-				<tr>
-					<th>Order</th>
-					<th>Course Code</th>
-					<th>Course Name</th>
-					<th>Credits</th>
-				</tr>
-			</thead>
+            <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Course Code</th>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+                </tr>
+            </thead>
 
-			<tbody>
+            <tbody>
 
-				@for (int i = 0; i < result.OrderedCourses.Count; i++)
-				{
-					PlannedCourse course = result.OrderedCourses[i];
+                @for (int i = 0; i < result.OrderedCourses.Count; i++)
+                {
+                    PlannedCourse course = result.OrderedCourses[i];
 
-					<tr>
-						<td>@(i + 1)</td>
-						<td>@course.Code</td>
-						<td>@course.Name</td>
-						<td>@course.Credits</td>
-					</tr>
-				}
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@course.Code</td>
+                        <td>@course.Name</td>
+                        <td>@course.Credits</td>
+                    </tr>
+                }
 
-			</tbody>
+            </tbody>
 
-		</table>
-	}
-	else
-	{
-		<div class="alert alert-danger">
-			@result.Message
-		</div>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            @result.Message
+        </div>
 
-		@if (result.HasCycle)
-		{
-			<p>
-				The prerequisite graph contains a cycle, so a valid topological ordering does not exist.
-			</p>
-		}
-	}
+        @if (result.HasCycle)
+        {
+            <p>
+                The prerequisite graph contains a cycle, so a valid topological ordering does not exist.
+            </p>
+        }
+    }
 
-	<p>
-		Courses in graph:
-		<strong>@result.VertexCount</strong>
-	</p>
+    <p>
+        Courses in graph:
+        <strong>@result.VertexCount</strong>
+    </p>
 
-	<p>
-		Prerequisite relationships:
-		<strong>@result.EdgeCount</strong>
-	</p>
+    <p>
+        Prerequisite relationships:
+        <strong>@result.EdgeCount</strong>
+    </p>
 }
 
 @code
 {
-	private List<PlannedCourse> plannedCourses = new();
+    private List<PlannedCourse> plannedCourses = new();
 
-	private List<PrerequisiteRelation> relations = new();
+    private List<PrerequisiteRelation> relations = new();
 
-	private PlannedCourse newCourse = new();
+    private PlannedCourse newCourse = new();
 
-	private PrerequisiteRelation newRelation = new();
+    private PrerequisiteRelation newRelation = new();
 
-	private CoursePlanResult? result;
+    private CoursePlanResult? result;
 
-	private string errorMessage = string.Empty;
+    private string errorMessage = string.Empty;
 
-	private void AddCourse()
-	{
-		errorMessage = string.Empty;
+    private void AddCourse()
+    {
+        errorMessage = string.Empty;
 
-		string normalizedCode = newCourse.Code.Trim();
+        string normalizedCode = newCourse.Code.Trim();
 
-		bool alreadyExists = plannedCourses.Any(course => string.Equals(course.Code, normalizedCode, StringComparison.OrdinalIgnoreCase));
+        bool alreadyExists = plannedCourses.Any(course => string.Equals(course.Code, normalizedCode, StringComparison.OrdinalIgnoreCase));
 
-		if (alreadyExists)
-		{
-			errorMessage = "A course with this code already exists.";
+        if (alreadyExists)
+        {
+            errorMessage = "A course with this code already exists.";
 
-			return;
-		}
+            return;
+        }
 
-		plannedCourses.Add(
-		new PlannedCourse
-		{
-			Code = normalizedCode,
-			Name = newCourse.Name.Trim(),
-			Credits = newCourse.Credits
-		});
+        plannedCourses.Add(
+            new PlannedCourse
+            {
+                Code = normalizedCode,
+                Name = newCourse.Name.Trim(),
+                Credits = newCourse.Credits
+            });
 
-		newCourse = new PlannedCourse();
+        newCourse = new PlannedCourse();
 
-		result = null;
-	}
+        result = null;
+    }
 
-	private void RemoveCourse(PlannedCourse course)
-	{
-		plannedCourses.Remove(course);
+    private void RemoveCourse(PlannedCourse course)
+    {
+        plannedCourses.Remove(course);
 
-		relations.RemoveAll(relation => string.Equals(relation.PrerequisiteCode, course.Code, StringComparison.OrdinalIgnoreCase)
-		|| string.Equals(relation.CourseCode, course.Code, StringComparison.OrdinalIgnoreCase));
+        relations.RemoveAll(relation => string.Equals(relation.PrerequisiteCode, course.Code, StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(relation.CourseCode, course.Code, StringComparison.OrdinalIgnoreCase));
 
-		result = null;
-		errorMessage = string.Empty;
-	}
+        result = null;
+        errorMessage = string.Empty;
+    }
 
-	private void AddRelation()
-	{
-		errorMessage = string.Empty;
+    private void AddRelation()
+    {
+        errorMessage = string.Empty;
 
-		if ((string.IsNullOrWhiteSpace(newRelation.PrerequisiteCode)) || (string.IsNullOrWhiteSpace(newRelation.CourseCode)))
-		{
-			errorMessage = "Select both courses.";
+        if (string.IsNullOrWhiteSpace(newRelation.PrerequisiteCode) || string.IsNullOrWhiteSpace(newRelation.CourseCode))
+        {
+            errorMessage = "Select both courses.";
 
-			return;
-		}
+            return;
+        }
 
-		if (string.Equals(newRelation.PrerequisiteCode, newRelation.CourseCode, StringComparison.OrdinalIgnoreCase))
-		{
-			errorMessage = "A course cannot be its own prerequisite.";
+        if (string.Equals(newRelation.PrerequisiteCode, newRelation.CourseCode, StringComparison.OrdinalIgnoreCase))
+        {
+            errorMessage = "A course cannot be its own prerequisite.";
 
-			return;
-		}
+            return;
+        }
 
-		bool alreadyExists = relations.Any(relation => string.Equals(relation.PrerequisiteCode, newRelation.PrerequisiteCode,
-			StringComparison.OrdinalIgnoreCase) && string.Equals(relation.CourseCode,
-				newRelation.CourseCode, StringComparison.OrdinalIgnoreCase));
+        bool alreadyExists = relations.Any(relation => string.Equals(relation.PrerequisiteCode, newRelation.PrerequisiteCode,
+            StringComparison.OrdinalIgnoreCase) && string.Equals(relation.CourseCode, newRelation.CourseCode, 
+                StringComparison.OrdinalIgnoreCase));
 
-		if (alreadyExists)
-		{
-			errorMessage = "This prerequisite relationship already exists.";
+        if (alreadyExists)
+        {
+            errorMessage = "This prerequisite relationship already exists.";
 
-			return;
-		}
+            return;
+        }
 
-		relations.Add(
-		new PrerequisiteRelation
-		{
-			PrerequisiteCode = newRelation.PrerequisiteCode,
+        relations.Add(
+            new PrerequisiteRelation
+            {
+                PrerequisiteCode = newRelation.PrerequisiteCode,
 
-			CourseCode = newRelation.CourseCode
-		});
+                CourseCode = newRelation.CourseCode
+            });
 
-		newRelation = new PrerequisiteRelation();
+        newRelation = new PrerequisiteRelation();
 
-		result = null;
-	}
+        result = null;
+    }
+
+    private void RemoveRelation(PrerequisiteRelation relation)
+    {
+        relations.Remove(relation);
+
+        result = null;
+        errorMessage = string.Empty;
+    }
+
+    private void GeneratePlan()
+    {
+        errorMessage = string.Empty;
+
+        result = CoursePlannerService.CreatePlan(plannedCourses, relations);
+    }
+
+    private void ClearPlanner()
+    {
+        plannedCourses.Clear();
+        relations.Clear();
+
+        newCourse = new PlannedCourse();
+
+        newRelation = new PrerequisiteRelation();
+
+        result = null;
+        errorMessage = string.Empty;
+    }
 }
