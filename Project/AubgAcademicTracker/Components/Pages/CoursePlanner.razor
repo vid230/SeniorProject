@@ -308,6 +308,56 @@ else
 	</p>
 }
 
-@code {
+@code
+{
+	private List<PlannedCourse> plannedCourses = new();
 
+	private List<PrerequisiteRelation> relations = new();
+
+	private PlannedCourse newCourse = new();
+
+	private PrerequisiteRelation newRelation = new();
+
+	private CoursePlanResult? result;
+
+	private string errorMessage = string.Empty;
+
+	private void AddCourse()
+	{
+		errorMessage = string.Empty;
+
+		string normalizedCode = newCourse.Code.Trim();
+
+		bool alreadyExists = plannedCourses.Any(course => string.Equals(course.Code, normalizedCode, StringComparison.OrdinalIgnoreCase));
+
+		if (alreadyExists)
+		{
+			errorMessage = "A course with this code already exists.";
+
+			return;
+		}
+
+		plannedCourses.Add(
+		new PlannedCourse
+		{
+			Code = normalizedCode,
+			Name = newCourse.Name.Trim(),
+			Credits = newCourse.Credits
+		});
+
+		newCourse = new PlannedCourse();
+
+		result = null;
+	}
+
+	private void RemoveCourse(PlannedCourse course)
+	{
+		plannedCourses.Remove(course);
+
+		relations.RemoveAll(relation => string.Equals(relation.PrerequisiteCode, course.Code, StringComparison.OrdinalIgnoreCase)
+		|| string.Equals(relation.CourseCode, course.Code, StringComparison.OrdinalIgnoreCase));
+
+		result = null;
+		errorMessage = string.Empty;
+	}
 }
