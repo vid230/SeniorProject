@@ -250,8 +250,62 @@ else
 
 	@if (result.Success)
 	{
-		//
+		<div class="alert alert-success">
+			@result.Message
+		</div>
+
+		<table class="table table-striped">
+
+			<thead>
+				<tr>
+					<th>Order</th>
+					<th>Course Code</th>
+					<th>Course Name</th>
+					<th>Credits</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				@for (int i = 0; i < result.OrderedCourses.Count; i++)
+				{
+					PlannedCourse course = result.OrderedCourses[i];
+
+					<tr>
+						<td>@(i + 1)</td>
+						<td>@course.Code</td>
+						<td>@course.Name</td>
+						<td>@course.Credits</td>
+					</tr>
+				}
+
+			</tbody>
+
+		</table>
 	}
+	else
+	{
+		<div class="alert alert-danger">
+			@result.Message
+		</div>
+
+		@if (result.HasCycle)
+		{
+			<p>
+				The prerequisite graph contains a cycle, so a valid topological ordering does not exist.
+			</p>
+		}
+	}
+
+	<p>
+		Courses in graph:
+		<strong>@result.VertexCount</strong>
+	</p>
+
+	<p>
+		Prerequisite relationships:
+		<strong>@result.EdgeCount</strong>
+	</p>
 }
 
 @code {
