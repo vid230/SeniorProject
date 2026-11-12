@@ -360,4 +360,46 @@ else
 		result = null;
 		errorMessage = string.Empty;
 	}
+
+	private void AddRelation()
+	{
+		errorMessage = string.Empty;
+
+		if ((string.IsNullOrWhiteSpace(newRelation.PrerequisiteCode)) || (string.IsNullOrWhiteSpace(newRelation.CourseCode)))
+		{
+			errorMessage = "Select both courses.";
+
+			return;
+		}
+
+		if (string.Equals(newRelation.PrerequisiteCode, newRelation.CourseCode, StringComparison.OrdinalIgnoreCase))
+		{
+			errorMessage = "A course cannot be its own prerequisite.";
+
+			return;
+		}
+
+		bool alreadyExists = relations.Any(relation => string.Equals(relation.PrerequisiteCode, newRelation.PrerequisiteCode,
+			StringComparison.OrdinalIgnoreCase) && string.Equals(relation.CourseCode,
+				newRelation.CourseCode, StringComparison.OrdinalIgnoreCase));
+
+		if (alreadyExists)
+		{
+			errorMessage = "This prerequisite relationship already exists.";
+
+			return;
+		}
+
+		relations.Add(
+		new PrerequisiteRelation
+		{
+			PrerequisiteCode = newRelation.PrerequisiteCode,
+
+			CourseCode = newRelation.CourseCode
+		});
+
+		newRelation = new PrerequisiteRelation();
+
+		result = null;
+	}
 }
