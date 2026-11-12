@@ -15,7 +15,50 @@
 
 <hr />
 
-<h3></h3>
+<h3>1. Add Planned Course</h3>
+
+<EditForm Model="@newCourse" OnInvalidSubmit="@AddCourse">
+
+	<DataAnnotationsValidator></DataAnnotationsValidator>
+	<ValidationSummary></ValidationSummary>
+
+	<div class="mb-3">
+		<label class="form-label">
+			Course Code
+		</label>
+
+		<InputText class="form-control" @bind-Value="newCourse.Code"></InputText>
+
+		<ValidationMessage For="@(() => newCourse.Code)"></ValidationMessage>
+	</div>
+
+	<div class="mb-3">
+		<label class="form-label">
+			Course Name
+		</label>
+
+		<InputText class="form-control" @bind-Value="newCourse.Name"></InputText>
+
+		<ValidationMessage For="@(() => newCourse.Name)"></ValidationMessage>
+	</div>
+
+	<div class="mb-3">
+		<label class="form-label">
+			Credits
+		</label>
+
+		<InputNumber class="form-control" @bind-Value="newCourse.Credits"></InputNumber>
+
+		<ValidationMessage For="@(() => newCourse.Credits)"></ValidationMessage>
+	</div>
+
+	<button type="submit" class="btn btn-primary">
+		Add Planned Course
+	</button>
+
+</EditForm>
+
+<hr />
 
 @code {
 
