@@ -59,6 +59,31 @@ namespace AubgAcademicTracker.Services
                         CourseCount = semesterCourses.Count
                     });
             }
+
+            foreach (string grade in gradeOrder)
+            {
+                int count = courseList.Count(course => course.Grade == grade);
+
+                result.GradeDistribution.Add(
+                    new GradeStatistics
+                    {
+                        Grade = grade,
+                        Count = count
+                    });
+            }
+
+            result.TotalCourses = courseList.Count;
+
+            if (result.Semesters.Count > 0)
+            {
+                result.HighestSemesterGpa = result.Semesters.Max(semester => semester.Gpa);
+
+                result.LowestSemesterGpa = result.Semesters.Min(semester => semester.Gpa);
+
+                result.AverageSemesterGpa = result.Semesters.Average(semester => semester.Gpa);
+            }
+
+            return result;
         }
     }
 }
