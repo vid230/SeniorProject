@@ -205,5 +205,12 @@ else
 
 @code
 {
-	//
+	private AcademicStatisticsResult? statistics;
+
+	protected override async Task OnInitializedAsync()
+	{
+		List<Course> courses = await CourseService.GetCoursesAsync();
+
+		List<Semester> semesters = await SemesterService.GetSemestersAsync();
+	}
 }
