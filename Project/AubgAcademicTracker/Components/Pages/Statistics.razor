@@ -1,0 +1,65 @@
+﻿@page "/statistics"
+
+@using AubgAcademicTracker.Models
+@using AubgAcademicTracker.Services
+
+@inject CourseService CourseService
+@inject SemesterService SemesterService
+@inject AcademicStatisticsService AcademicStatisticsService
+
+<PageTitle>Academic Statistics</PageTitle>
+
+<h1>Academic Statistics</h1>
+
+<p class="text-muted">
+	Visual summary of academic performance across semesters.
+</p>
+
+@if (statistics == null)
+{
+	<p>Loading...</p>
+}
+else if (statistics.TotalCourses == 0)
+{
+	<div class="alert alert-info">
+		Add courses before viewing academic statistics.
+	</div>
+}
+else
+{
+	<div class="row mb-4">
+
+		<div class="col-md-3 mb-3">
+			<div class="card">
+				<div class="card-body">
+
+					<h5>Total Courses</h5>
+
+					<h2>
+						@statistics.TotalCourses
+					</h2>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 mb-3">
+			<div class="card">
+				<div class="card-body">
+
+					<h5>Highest Semester GPA</h5>
+
+					<h2>
+						@statistics.HighestSemesterGpa.ToString("0.00")
+					</h2>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+}
+
+@code {
+
+}
