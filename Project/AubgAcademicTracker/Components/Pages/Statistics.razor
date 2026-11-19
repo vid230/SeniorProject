@@ -133,7 +133,33 @@ else
 	@foreach (GradeStatistics grade in statistics.GradeDistribution)
 	{
 		double width = (maxGradeCount == 0) ? 0 : (double) grade.Count / maxGradeCount * 100;
+
+		<div class="mb-2">
+
+			<div class="d-flex justify-content-between">
+
+				<strong>@grade.Grade</strong>
+
+				<span>
+					@grade.Count course(s)
+				</span>
+
+			</div>
+
+			<div class="progress" style="height: 20px;">
+
+				<div class="progress-bar" role="progressbar" style="@($"width: {width}%")"></div>
+
+			</div>
+
+		</div>
 	}
+
+	<hr />
+
+	<h3>Semester Details</h3>
+
+	<table class="table table-striped"></table>
 }
 
 @code {
