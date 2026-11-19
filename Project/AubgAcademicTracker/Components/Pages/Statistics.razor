@@ -109,7 +109,30 @@ else
 
 			</div>
 
+			<div class="progress" style="height: 25px;">
+
+				<div class="progress-bar" role="progressbar" style="@($"width: {percentage}%")">
+
+					@semester.Gpa.ToString("0.00")
+
+				</div>
+
+			</div>
+
 		</div>
+	}
+
+	<hr />
+
+	<h3>Grade Distribution</h3>
+
+	@{
+		int maxGradeCount = (statistics.GradeDistribution.Count == 0) ? 0 : statistics.GradeDistribution.Max(item => item.Count);
+	}
+
+	@foreach (GradeStatistics grade in statistics.GradeDistribution)
+	{
+		double width = (maxGradeCount == 0) ? 0 : (double) grade.Count / maxGradeCount * 100;
 	}
 }
 
