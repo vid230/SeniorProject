@@ -57,7 +57,60 @@ else
 			</div>
 		</div>
 
+		<div class="col-md-3 mb-3">
+			<div class="card">
+				<div class="card-body">
+
+					<h5>Lowest Semester GPA</h5>
+
+					<h2>
+						@statistics.LowestSemesterGpa.ToString("0.00")
+					</h2>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 mb-3">
+			<div class="card">
+				<div class="card-body">
+
+					<h5>Average Semester GPA</h5>
+
+					<h2>
+						@statistics.AverageSemesterGpa.ToString("0.00")
+					</h2>
+
+				</div>
+			</div>
+		</div>
+
 	</div>
+
+	<hr />
+
+	<h3>GPA by Semester</h3>
+
+	@foreach (SemesterStatistics semester in statistics.Semesters)
+	{
+		double percentage = semester.Gpa / 4.0 * 100;
+
+		<div class="mb-3">
+
+			<div class="d-flex justify-content-between">
+
+				<strong>
+					@semester.SemesterName
+				</strong>
+
+				<span>
+					@semester.Gpa.ToString("0.00")
+				</span>
+
+			</div>
+
+		</div>
+	}
 }
 
 @code {
