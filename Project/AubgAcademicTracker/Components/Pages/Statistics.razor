@@ -12,205 +12,205 @@
 <h1>Academic Statistics</h1>
 
 <p class="text-muted">
-	Visual summary of academic performance across semesters.
+    Visual summary of academic performance across semesters.
 </p>
 
 @if (statistics == null)
 {
-	<p>Loading...</p>
+    <p>Loading...</p>
 }
 else if (statistics.TotalCourses == 0)
 {
-	<div class="alert alert-info">
-		Add courses before viewing academic statistics.
-	</div>
+    <div class="alert alert-info">
+        Add courses before viewing academic statistics.
+    </div>
 }
 else
 {
-	<div class="row mb-4">
+    <div class="row mb-4">
 
-		<div class="col-md-3 mb-3">
-			<div class="card">
-				<div class="card-body">
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
 
-					<h5>Total Courses</h5>
+                    <h5>Total Courses</h5>
 
-					<h2>
-						@statistics.TotalCourses
-					</h2>
+                    <h2>
+                        @statistics.TotalCourses
+                    </h2>
 
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 
-		<div class="col-md-3 mb-3">
-			<div class="card">
-				<div class="card-body">
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
 
-					<h5>Highest Semester GPA</h5>
+                    <h5>Highest Semester GPA</h5>
 
-					<h2>
-						@statistics.HighestSemesterGpa.ToString("0.00")
-					</h2>
+                    <h2>
+                        @statistics.HighestSemesterGpa.ToString("0.00")
+                    </h2>
 
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 
-		<div class="col-md-3 mb-3">
-			<div class="card">
-				<div class="card-body">
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
 
-					<h5>Lowest Semester GPA</h5>
+                    <h5>Lowest Semester GPA</h5>
 
-					<h2>
-						@statistics.LowestSemesterGpa.ToString("0.00")
-					</h2>
+                    <h2>
+                        @statistics.LowestSemesterGpa.ToString("0.00")
+                    </h2>
 
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 
-		<div class="col-md-3 mb-3">
-			<div class="card">
-				<div class="card-body">
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
 
-					<h5>Average Semester GPA</h5>
+                    <h5>Average Semester GPA</h5>
 
-					<h2>
-						@statistics.AverageSemesterGpa.ToString("0.00")
-					</h2>
+                    <h2>
+                        @statistics.AverageSemesterGpa.ToString("0.00")
+                    </h2>
 
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 
-	</div>
+    </div>
 
-	<hr />
+    <hr />
 
-	<h3>GPA by Semester</h3>
+    <h3>GPA by Semester</h3>
 
-	@foreach (SemesterStatistics semester in statistics.Semesters)
-	{
-		double percentage = semester.Gpa / 4.0 * 100;
+    @foreach (SemesterStatistics semester in statistics.Semesters)
+    {
+        double percentage = semester.Gpa / 4.0 * 100;
 
-		<div class="mb-3">
+        <div class="mb-3">
 
-			<div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between">
 
-				<strong>
-					@semester.SemesterName
-				</strong>
+                <strong>
+                    @semester.SemesterName
+                </strong>
 
-				<span>
-					@semester.Gpa.ToString("0.00")
-				</span>
+                <span>
+                    @semester.Gpa.ToString("0.00")
+                </span>
 
-			</div>
+            </div>
 
-			<div class="progress" style="height: 25px;">
+            <div class="progress" style="height: 25px;">
 
-				<div class="progress-bar" role="progressbar" style="@($"width: {percentage}%")">
+                <div class="progress-bar" role="progressbar" style="@($"width: {percentage}%")">
 
-					@semester.Gpa.ToString("0.00")
+                    @semester.Gpa.ToString("0.00")
 
-				</div>
+                </div>
 
-			</div>
+            </div>
 
-		</div>
-	}
+        </div>
+    }
 
-	<hr />
+    <hr />
 
-	<h3>Grade Distribution</h3>
+    <h3>Grade Distribution</h3>
 
-	@{
-		int maxGradeCount = (statistics.GradeDistribution.Count == 0) ? 0 : statistics.GradeDistribution.Max(item => item.Count);
-	}
+    int maxGradeCount = (statistics.GradeDistribution.Count == 0) ? 0 : statistics.GradeDistribution.Max(item => item.Count);
 
-	@foreach (GradeStatistics grade in statistics.GradeDistribution)
-	{
-		double width = (maxGradeCount == 0) ? 0 : (double) grade.Count / maxGradeCount * 100;
+    @foreach (GradeStatistics grade in statistics.GradeDistribution)
+    {
+        double width = (maxGradeCount == 0) ? 0 : (double) grade.Count / maxGradeCount * 100;
 
-		<div class="mb-2">
+        <div class="mb-2">
 
-			<div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between">
 
-				<strong>@grade.Grade</strong>
+                <strong>@grade.Grade</strong>
 
-				<span>
-					@grade.Count course(s)
-				</span>
+                <span>
+                    @grade.Count course(s)
+                </span>
 
-			</div>
+            </div>
 
-			<div class="progress" style="height: 20px;">
+            <div class="progress" style="height: 20px;">
 
-				<div class="progress-bar" role="progressbar" style="@($"width: {width}%")"></div>
+                <div class="progress-bar" role="progressbar" style="@($"width: {width}%")"></div>
 
-			</div>
+            </div>
 
-		</div>
-	}
+        </div>
+    }
 
-	<hr />
+    <hr />
 
-	<h3>Semester Details</h3>
+    <h3>Semester Details</h3>
 
-	<table class="table table-striped">
+    <table class="table table-striped">
 
-		<thead>
-			<tr>
-				<th>Semester</th>
-				<th>Courses</th>
-				<th>Attempted Credits</th>
-				<th>Earned Credits</th>
-				<th>GPA</th>
-			</tr>
-		</thead>
+        <thead>
+            <tr>
+                <th>Semester</th>
+                <th>Courses</th>
+                <th>Attempted Credits</th>
+                <th>Earned Credits</th>
+                <th>GPA</th>
+            </tr>
+        </thead>
 
-		<tbody>
+        <tbody>
 
-			@foreach (SemesterStatistics semester in statistics.Semesters)
-			{
-				<tr>
-					<td>
-						@semester.SemesterName
-					</td>
+            @foreach (SemesterStatistics semester in statistics.Semesters)
+            {
+                <tr>
+                    <td>
+                        @semester.SemesterName
+                    </td>
 
-					<td>
-						@semester.CourseCount
-					</td>
+                    <td>
+                        @semester.CourseCount
+                    </td>
 
-					<td>
-						@semester.AttemptedCredits
-					</td>
+                    <td>
+                        @semester.AttemptedCredits
+                    </td>
 
-					<td>
-						@semester.EarnedCredits
-					</td>
+                    <td>
+                        @semester.EarnedCredits
+                    </td>
 
-					<td>
-						@semester.Gpa.ToString("0.00")
-					</td>
-				</tr>
-			}
+                    <td>
+                        @semester.Gpa.ToString("0.00")
+                    </td>
+                </tr>
+            }
 
-		</tbody>
+        </tbody>
 
-	</table>
+    </table>
 }
 
 @code
 {
-	private AcademicStatisticsResult? statistics;
+    private AcademicStatisticsResult? statistics;
 
-	protected override async Task OnInitializedAsync()
-	{
-		List<Course> courses = await CourseService.GetCoursesAsync();
+    protected override async Task OnInitializedAsync()
+    {
+        List<Course> courses = await CourseService.GetCoursesAsync();
 
-		List<Semester> semesters = await SemesterService.GetSemestersAsync();
-	}
+        List<Semester> semesters = await SemesterService.GetSemestersAsync();
+
+        statistics = AcademicStatisticsService.CalculateStatistics(semesters, courses);
+    }
 }
