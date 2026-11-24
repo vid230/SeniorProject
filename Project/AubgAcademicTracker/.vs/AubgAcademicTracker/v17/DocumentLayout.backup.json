@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DEF70C1B-3A59-404F-87C2-0DC2D0796706}|..\\AubgAcademicTracker.Tests\\AubgAcademicTracker.Tests.csproj|d:\\documents valeri\\gdrive mirrored stuff\\aubg\\year4\\semester 1\\senior project cos\\seniorproject\\project\\aubgacademictracker.tests\\degreeprogressservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DEF70C1B-3A59-404F-87C2-0DC2D0796706}|..\\AubgAcademicTracker.Tests\\AubgAcademicTracker.Tests.csproj|d:\\documents valeri\\gdrive mirrored stuff\\aubg\\year4\\semester 1\\senior project cos\\seniorproject\\project\\aubgacademictracker.tests\\academicstatisticsservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,14 +18,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DegreeProgressServiceTests.cs",
-              "DocumentMoniker": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker.Tests\\DegreeProgressServiceTests.cs",
-              "RelativeDocumentMoniker": "..\\AubgAcademicTracker.Tests\\DegreeProgressServiceTests.cs",
-              "ToolTip": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker.Tests\\DegreeProgressServiceTests.cs",
-              "RelativeToolTip": "..\\AubgAcademicTracker.Tests\\DegreeProgressServiceTests.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAcwFoAAAAVAAAAAAAAAA==",
+              "Title": "AcademicStatisticsServiceTests.cs",
+              "DocumentMoniker": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker.Tests\\AcademicStatisticsServiceTests.cs",
+              "RelativeDocumentMoniker": "..\\AubgAcademicTracker.Tests\\AcademicStatisticsServiceTests.cs",
+              "ToolTip": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker.Tests\\AcademicStatisticsServiceTests.cs",
+              "RelativeToolTip": "..\\AubgAcademicTracker.Tests\\AcademicStatisticsServiceTests.cs",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAcwIYAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-24T11:13:05.429Z",
+              "WhenOpened": "2026-11-24T11:21:53.818Z",
               "EditorCaption": ""
             }
           ]
