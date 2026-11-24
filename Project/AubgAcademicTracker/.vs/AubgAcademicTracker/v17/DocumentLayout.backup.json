@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DEF70C1B-3A59-404F-87C2-0DC2D0796706}|..\\AubgAcademicTracker.Tests\\AubgAcademicTracker.Tests.csproj|d:\\documents valeri\\gdrive mirrored stuff\\aubg\\year4\\semester 1\\senior project cos\\seniorproject\\project\\aubgacademictracker.tests\\gpacalculatortests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DEF70C1B-3A59-404F-87C2-0DC2D0796706}|..\\AubgAcademicTracker.Tests\\AubgAcademicTracker.Tests.csproj|d:\\documents valeri\\gdrive mirrored stuff\\aubg\\year4\\semester 1\\senior project cos\\seniorproject\\project\\aubgacademictracker.tests\\creditcalculatortests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,14 +18,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "GpaCalculatorTests.cs",
-              "DocumentMoniker": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker.Tests\\GpaCalculatorTests.cs",
-              "RelativeDocumentMoniker": "..\\AubgAcademicTracker.Tests\\GpaCalculatorTests.cs",
-              "ToolTip": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker.Tests\\GpaCalculatorTests.cs",
-              "RelativeToolTip": "..\\AubgAcademicTracker.Tests\\GpaCalculatorTests.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAiwE4AAABBAAAAAAAAAA==",
+              "Title": "CreditCalculatorTests.cs",
+              "DocumentMoniker": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker.Tests\\CreditCalculatorTests.cs",
+              "RelativeDocumentMoniker": "..\\AubgAcademicTracker.Tests\\CreditCalculatorTests.cs",
+              "ToolTip": "D:\\Documents Valeri\\GDrive Mirrored Stuff\\AUBG\\Year4\\Semester 1\\Senior Project COS\\SeniorProject\\Project\\AubgAcademicTracker.Tests\\CreditCalculatorTests.cs",
+              "RelativeToolTip": "..\\AubgAcademicTracker.Tests\\CreditCalculatorTests.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAcwE0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-24T10:00:33.119Z",
+              "WhenOpened": "2026-11-24T10:09:05.656Z",
               "EditorCaption": ""
             }
           ]
