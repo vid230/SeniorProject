@@ -7,7 +7,7 @@ namespace AubgAcademicTracker.Models
         [Required(ErrorMessage = "Course name is required.")]
         public string Name { get; set; } = string.Empty;
 
-        [Range(1, 10, ErrorMessage = "Credits must be between 1 and 10.")]
+        [Range(1, 4, ErrorMessage = "Credits must be between 1 and 4.")]
         public int Credits { get; set; }
     }
 }

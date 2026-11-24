@@ -184,6 +184,8 @@ else
 
 @code
 {
+    private string? errorMessage;
+
     private List<Course> currentCourses = new();
 
     private List<RemainingCourse> remainingCourses = new();
@@ -225,6 +227,21 @@ else
     private async Task SolveAsync()
     {
         result = null;
+
+        if (targetGpa < 0 || targetGpa > 4.0)
+        {
+            errorMessage = "Target GPA must be between 0.00 and 4.00.";
+            result = null;
+            return;
+        }
+
+        if (remainingCourses.Count == 0)
+        {
+            errorMessage = "Add at least one remaining course before solving.";
+            result = null;
+            return;
+        }
+
         isSolving = true;
 
         await InvokeAsync(StateHasChanged);
