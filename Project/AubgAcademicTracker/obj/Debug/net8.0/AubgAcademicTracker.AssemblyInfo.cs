@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AubgAcademicTracker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d286a3cb49d7abefec55dd7f9beb9fe496054e2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62100a14d289870f9a1539bc9e4ae1f027feac72")]
 [assembly: System.Reflection.AssemblyProductAttribute("AubgAcademicTracker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AubgAcademicTracker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -96,6 +96,13 @@ else
         @(isSolving ? "Calculating..." : "Find Required Grades")
     </button>
 
+    @if (!string.IsNullOrWhiteSpace(errorMessage))
+    {
+        <div class="alert alert-danger mt-3">
+            @errorMessage
+        </div>
+    }
+
     @if (isSolving)
     {
         <div class="alert alert-info mt-3">
@@ -226,9 +233,7 @@ else
 
     private async Task SolveAsync()
     {
-        result = null;
-
-        if (targetGpa < 0 || targetGpa > 4.0)
+        if ((targetGpa < 0) || (targetGpa > 4.0))
         {
             errorMessage = "Target GPA must be between 0.00 and 4.00.";
             result = null;
@@ -242,14 +247,28 @@ else
             return;
         }
 
+        errorMessage = null;
+        result = null;
         isSolving = true;
 
-        await InvokeAsync(StateHasChanged);
+        StateHasChanged();
+
         await Task.Yield();
 
         try
         {
             result = await Task.Run(() => TargetGpaSolver.Solve(currentCourses, remainingCourses, targetGpa));
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            errorMessage = ex.Message;
+            result = null;
+        }
+        catch (Exception)
+        {
+            errorMessage = "An unexpected error occurred while calculating the target GPA.";
+
+            result = null;
         }
         finally
         {
