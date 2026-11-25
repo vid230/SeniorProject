@@ -32,10 +32,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZGRTZW1lc3Rlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Documents Valeri/GDrive Mirrored Stuff/AUBG/Year4/Semester 1/Senior Project COS/SeniorProject/Project/AubgAcademicTracker/Components/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/Documents Valeri/GDrive Mirrored Stuff/AUBG/Year4/Semester 1/Senior Project COS/SeniorProject/Project/AubgAcademicTracker/Components/Pages/CoursePlanner.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3Vyc2VQbGFubmVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -74,10 +70,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Documents Valeri/GDrive Mirrored Stuff/AUBG/Year4/Semester 1/Senior Project COS/SeniorProject/Project/AubgAcademicTracker/Components/Pages/TargetGpa.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xUYXJnZXRHcGEucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Documents Valeri/GDrive Mirrored Stuff/AUBG/Year4/Semester 1/Senior Project COS/SeniorProject/Project/AubgAcademicTracker/Components/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Documents Valeri/GDrive Mirrored Stuff/AUBG/Year4/Semester 1/Senior Project COS/SeniorProject/Project/AubgAcademicTracker/Components/Pages/WhatIfCalculator.razor]
